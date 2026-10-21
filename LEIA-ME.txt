@@ -1,0 +1,33 @@
+NEXO PWA — COMO TESTAR E PUBLICAR
+
+ARQUIVOS
+- index.html: estrutura da tela
+- style.css: aparência e layout
+- script.js: lógica do jogo, salvamento e recompensa demonstrativa
+- manifest.json: configuração instalável do PWA
+- sw.js: cache e funcionamento offline básico
+- icon.svg: ícone do NEXO
+
+TESTE LOCAL
+1. Extraia a pasta nexo-pwa.
+2. Abra um terminal dentro da pasta.
+3. Se tiver Python instalado, execute: python -m http.server 8000
+4. No navegador, abra: http://localhost:8000
+
+Importante: abrir o index.html com duplo clique permite testar parte do jogo, mas service worker/PWA precisa de localhost ou HTTPS.
+
+PUBLICAÇÃO GRATUITA COM GITHUB PAGES
+1. Crie uma conta em https://github.com/ caso ainda não tenha.
+2. Crie um repositório público chamado nexo (ou outro nome).
+3. Envie TODOS os arquivos desta pasta para a raiz do repositório — não envie o ZIP como único arquivo.
+4. No repositório, abra Settings > Pages.
+5. Em Build and deployment, escolha Deploy from a branch.
+6. Escolha a branch main e a pasta /(root), depois salve.
+7. Aguarde a publicação e abra o endereço informado na tela do GitHub Pages.
+
+OBSERVAÇÕES
+- A hospedagem e o endereço github.io não exigem comprar domínio próprio.
+- O PWA precisa ser servido por HTTPS para instalação/service worker; GitHub Pages fornece HTTPS.
+- O progresso fica no armazenamento local do navegador/dispositivo. Não há sincronização entre aparelhos.
+- A recompensa de +3 vidas está em MODO DE DEMONSTRAÇÃO: ela não mostra anúncio real. Não anuncie como anúncio assistido até integrar um provedor e conceder a recompensa apenas após a confirmação do provedor.
+- O cache offline básico é implementado, mas a primeira visita precisa carregar os arquivos com conexão.

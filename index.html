@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="NEXO: um desafio de raciocínio lógico com palavras e diagramas de Venn.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <title>NEXO - Desafio Lógico</title>
+</head>
+<body>
+  <header>
+    <h1>NEXO</h1>
+    <p id="vidas" aria-live="polite">Vidas: ❤️❤️❤️</p>
+    <div class="painel-status">
+      <div class="status-item"><span>Nível</span><strong id="nivel">1</strong></div>
+      <div class="status-item"><span>Pontos</span><strong id="pontuacao">0</strong></div>
+      <div class="status-item"><span>Ofensiva</span><strong id="ofensiva">0 🔥</strong></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="instrucoes">
+      <h2>Desafio lógico</h2>
+      <p id="mensagem" aria-live="polite">Arraste cada palavra para a região correta.</p>
+      <p id="regras">Regra A e Regra B serão sorteadas.</p>
+      <p id="progresso">Palavras restantes: 0</p>
+      <p id="estado-salvamento" class="estado-salvamento">Seu progresso é salvo neste dispositivo.</p>
+    </section>
+
+    <section class="tabuleiro" aria-label="Diagrama de Venn">
+      <div class="circulo circulo-a zona-drop" data-zona="A" aria-label="Somente regra A"><span class="rotulo-regra">Regra A</span></div>
+      <div class="circulo circulo-b zona-drop" data-zona="B" aria-label="Somente regra B"><span class="rotulo-regra">Regra B</span></div>
+      <div class="circulo intersecao zona-drop" data-zona="AB" aria-label="Regras A e B"></div>
+    </section>
+
+    <section class="zona-nenhuma zona-drop" data-zona="N" aria-label="Nenhuma das regras">
+      <span class="rotulo-nenhuma">Nenhuma das regras</span>
+    </section>
+
+    <section class="area-banco">
+      <h3>Banco de palavras</h3>
+      <p class="dica-toque">Toque em uma palavra e depois na região desejada, ou arraste-a.</p>
+      <div class="banco-palavras" id="banco"></div>
+    </section>
+
+    <section id="mensagem-final" class="mensagem-final" hidden aria-live="polite">
+      <h2 id="titulo-final"></h2>
+      <p id="texto-final"></p>
+      <div id="acoes-final" class="acoes-final"></div>
+    </section>
+
+    <section class="acoes-secundarias">
+      <button id="botao-nova-partida" class="botao botao-secundario" type="button">Nova partida</button>
+    </section>
+  </main>
+
+  <footer><p>NEXO · Desafio de raciocínio lógico</p></footer>
+  <script src="script.js"></script>
+</body>
+</html>
