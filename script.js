@@ -22,13 +22,13 @@ const bancoDePalavras = [
   { termo: "ROSA", tags: ["Vermelho", "Planta"] },
   // Comida
   { termo: "ALFACE", tags: ["Comida", "Vegetal", "Verde"] },
-  { termo: "CENOURA", tags: ["Comida", "Vegetal", "Laranja"] },
+  { termo: "CENOURA", tags: ["Comida", "Vegetal"] },
   { termo: "PÃO", tags: ["Comida"] },
   { termo: "QUEIJO", tags: ["Comida"] },
   { termo: "UVA", tags: ["Comida", "Fruta", "Doce"] },
   { termo: "MAÇÃ", tags: ["Comida", "Fruta"] },
   { termo: "BANANA", tags: ["Comida", "Fruta", "Amarelo"] },
-  { termo: "LIMÃO", tags: ["Comida", "Fruta", "Verde", "Azedo"] },
+  { termo: "LIMÃO", tags: ["Comida", "Fruta", "Verde"] },
   { termo: "ABACAXI", tags: ["Comida", "Fruta"] },
   { termo: "MELANCIA", tags: ["Comida", "Fruta", "Verde"] },
   { termo: "CHOCOLATE", tags: ["Comida", "Doce"] },
@@ -45,9 +45,9 @@ const bancoDePalavras = [
   { termo: "BISCOITO", tags: ["Comida", "Doce"] },
   { termo: "PUDIM", tags: ["Comida", "Doce"] },
   { termo: "IOGURTE", tags: ["Comida"] },
-  { termo: "LARANJA", tags: ["Comida", "Fruta", "Laranja"] },
+  { termo: "LARANJA", tags: ["Comida", "Fruta"] },
   { termo: "PERA", tags: ["Comida", "Fruta"] },
-  { termo: "MAMÃO", tags: ["Comida", "Fruta", "Laranja"] },
+  { termo: "MAMÃO", tags: ["Comida", "Fruta"] },
   { termo: "MANGA", tags: ["Comida", "Fruta"] },
   { termo: "KIWI", tags: ["Comida", "Fruta", "Verde"] },
   { termo: "COCO", tags: ["Comida", "Fruta"] },
@@ -55,7 +55,7 @@ const bancoDePalavras = [
   { termo: "AMEIXA", tags: ["Comida", "Fruta"] },
   { termo: "GOIABA", tags: ["Comida", "Fruta"] },
   { termo: "MARACUJÁ", tags: ["Comida", "Fruta"] },
-  { termo: "ABÓBORA", tags: ["Comida", "Vegetal", "Laranja"] },
+  { termo: "ABÓBORA", tags: ["Comida", "Vegetal"] },
   { termo: "PEPINO", tags: ["Comida", "Vegetal", "Verde"] },
   { termo: "BRÓCOLIS", tags: ["Comida", "Vegetal", "Verde"] },
   { termo: "ESPINAFRE", tags: ["Comida", "Vegetal", "Verde"] },
@@ -97,7 +97,7 @@ const bancoDePalavras = [
   { termo: "LEÃO", tags: ["Animal", "Selvagem"] },
   { termo: "ÁGUIA", tags: ["Animal", "Voa", "Tem asas"] },
   { termo: "BORBOLETA", tags: ["Animal", "Voa", "Tem asas"] },
-  { termo: "PINGUIM", tags: ["Animal", "Tem asas", "Aquático"] },
+  { termo: "PINGUIM", tags: ["Animal", "Tem asas", "Aquático", "Frio"] },
   { termo: "MORCEGO", tags: ["Animal", "Voa"] },
   { termo: "AVESTRUZ", tags: ["Animal", "Tem asas"] },
   { termo: "GOLFINHO", tags: ["Animal", "Aquático"] },
@@ -131,7 +131,7 @@ const bancoDePalavras = [
   { termo: "FACA", tags: ["Doméstico", "Metal"] },
   { termo: "CHAVE", tags: ["Doméstico", "Metal"] },
   { termo: "PRATO", tags: ["Doméstico", "Redondo"] },
-  { termo: "TOALHA", tags: ["Doméstico"] },
+  { termo: "TOALHA", tags: ["Doméstico", "Tecido"] },
   { termo: "TRAVESSEIRO", tags: ["Doméstico"] },
   { termo: "ESCOVA", tags: ["Doméstico"] },
   { termo: "GUARDA-CHUVA", tags: ["Doméstico", "Objeto"] },
@@ -167,7 +167,7 @@ const bancoDePalavras = [
   { termo: "CÂMERA", tags: ["Tecnologia", "Eletrônico"] },
   { termo: "FONE DE OUVIDO", tags: ["Tecnologia", "Eletrônico"] },
   { termo: "GELADEIRA", tags: ["Doméstico", "Eletrônico"] },
-  { termo: "FOGÃO", tags: ["Doméstico", "Eletrônico"] },
+  { termo: "FOGÃO", tags: ["Doméstico", "Eletrônico", "Quente"] },
   { termo: "ASPIRADOR", tags: ["Doméstico", "Eletrônico"] },
   // Objetos
   { termo: "RELÓGIO", tags: ["Objeto", "Redondo"] },
@@ -209,12 +209,12 @@ const bancoDePalavras = [
   { termo: "URANO", tags: ["Espaço", "Planeta"] },
   { termo: "NETUNO", tags: ["Espaço", "Planeta"] },
   { termo: "LUA", tags: ["Espaço", "Redondo"] },
-  { termo: "SOL", tags: ["Espaço", "Estrela", "Redondo"] },
+  { termo: "SOL", tags: ["Espaço", "Estrela", "Redondo", "Amarelo"] },
   { termo: "ESTRELA", tags: ["Espaço", "Estrela"] },
   { termo: "COMETA", tags: ["Espaço"] },
   { termo: "ASTEROIDE", tags: ["Espaço"] },
   // Metais e materiais
-  { termo: "OURO", tags: ["Metal"] },
+  { termo: "OURO", tags: ["Metal", "Amarelo"] },
   { termo: "PRATA", tags: ["Metal"] },
   { termo: "FERRO", tags: ["Metal"] },
   { termo: "COBRE", tags: ["Metal"] },
@@ -256,93 +256,52 @@ const bancoDePalavras = [
   { termo: "BRANCO", tags: ["Cor"] },
   { termo: "PRETO", tags: ["Cor"] },
   { termo: "CINZA", tags: ["Cor"] },
-  // Diversos
-  { termo: "CÍRCULO", tags: ["Forma", "Redondo"] },
-  { termo: "RODA", tags: ["Redondo", "Tem rodas"] }
-];
 
-/* ---------- DESAFIOS DIÁRIOS ---------- */
-const desafiosDiarios = [
-  {
-    regraA: "Funciona com eletricidade",
-    regraB: "Cabe em uma mochila",
-    grupos: {
-      A: [["GELADEIRA PEQUENA", ["Funciona com eletricidade"]], ["MICRO-ONDAS", ["Funciona com eletricidade"]]],
-      B: [["GARRAFA", ["Cabe em uma mochila"]], ["GUARDA-CHUVA", ["Cabe em uma mochila"]]],
-      AB: [["CELULAR", ["Funciona com eletricidade", "Cabe em uma mochila"]], ["CALCULADORA", ["Funciona com eletricidade", "Cabe em uma mochila"]]],
-      N: [["PEDRA", []], ["COLHER DE PAU", []]]
-    }
-  },
-  {
-    regraA: "É usado na cozinha",
-    regraB: "Pode ser feito de metal",
-    grupos: {
-      A: [["ESPONJA", ["É usado na cozinha"]], ["PANO DE PRATO", ["É usado na cozinha"]]],
-      B: [["MOEDA", ["Pode ser feito de metal"]], ["PARAFUSO", ["Pode ser feito de metal"]]],
-      AB: [["PANELA", ["É usado na cozinha", "Pode ser feito de metal"]], ["GARFO", ["É usado na cozinha", "Pode ser feito de metal"]]],
-      N: [["TRAVESSEIRO", []], ["BOLA DE FUTEBOL", []]]
-    }
-  },
-  {
-    regraA: "É encontrado na natureza",
-    regraB: "É usado para escrever",
-    grupos: {
-      A: [["CACHOEIRA", ["É encontrado na natureza"]], ["MONTANHA", ["É encontrado na natureza"]]],
-      B: [["CANETA ESFEROGRÁFICA", ["É usado para escrever"]], ["MARCADOR", ["É usado para escrever"]]],
-      AB: [["LÁPIS", ["É encontrado na natureza", "É usado para escrever"]], ["GIZ", ["É encontrado na natureza", "É usado para escrever"]]],
-      N: [["MICRO-ONDAS", []], ["CHINELO", []]]
-    }
-  },
-  {
-    regraA: "Tem rodas",
-    regraB: "Transporta pessoas",
-    grupos: {
-      A: [["CARRINHO DE MÃO", ["Tem rodas"]], ["CARRINHO DE SUPERMERCADO", ["Tem rodas"]]],
-      B: [["ELEVADOR", ["Transporta pessoas"]], ["ESCADA ROLANTE", ["Transporta pessoas"]]],
-      AB: [["ÔNIBUS URBANO", ["Tem rodas", "Transporta pessoas"]], ["BICICLETA", ["Tem rodas", "Transporta pessoas"]]],
-      N: [["CADERNO", []], ["ABACAXI", []]]
-    }
-  },
-  {
-    regraA: "É um ser vivo",
-    regraB: "Pode voar",
-    grupos: {
-      A: [["ÁRVORE", ["É um ser vivo"]], ["MINHOCA", ["É um ser vivo"]]],
-      B: [["AVIÃO DE PAPEL", ["Pode voar"]], ["PIPA", ["Pode voar"]]],
-      AB: [["ABELHA", ["É um ser vivo", "Pode voar"]], ["MORCEGO", ["É um ser vivo", "Pode voar"]]],
-      N: [["CADEIRA", []], ["PEDRA", []]]
-    }
-  },
-  {
-    regraA: "É doce",
-    regraB: "É vermelho",
-    grupos: {
-      A: [["MEL", ["É doce"]], ["AÇÚCAR", ["É doce"]]],
-      B: [["SANGUE", ["É vermelho"]], ["PIMENTÃO", ["É vermelho"]]],
-      AB: [["MORANGO", ["É doce", "É vermelho"]], ["CEREJA", ["É doce", "É vermelho"]]],
-      N: [["ARROZ", []], ["SAPATO", []]]
-    }
-  },
-  {
-    regraA: "Faz barulho",
-    regraB: "Tem botão",
-    grupos: {
-      A: [["TROMBETA", ["Faz barulho"]], ["CACHORRO", ["Faz barulho"]]],
-      B: [["ELEVADOR", ["Tem botão"]], ["CONTROLE REMOTO", ["Tem botão"]]],
-      AB: [["TELEVISÃO", ["Faz barulho", "Tem botão"]], ["RÁDIO", ["Faz barulho", "Tem botão"]]],
-      N: [["PEDRA", []], ["CADERNO", []]]
-    }
-  },
-  {
-    regraA: "É líquido",
-    regraB: "É quente",
-    grupos: {
-      A: [["ÁGUA", ["É líquido"]], ["SUCO", ["É líquido"]]],
-      B: [["FOGO", ["É quente"]], ["SOL", ["É quente"]]],
-      AB: [["CAFÉ", ["É líquido", "É quente"]], ["SOPA", ["É líquido", "É quente"]]],
-      N: [["GELO", []], ["PEDRA", []]]
-    }
-  }
+  // =========================================
+  // Expansão — reforço de categorias
+  // (necessário para o diário automático ter
+  //  pares válidos em qtd=2)
+  // =========================================
+  // Bebida sem "Comida" (para a categoria "Bebida" funcionar isolada)
+  { termo: "ÁGUA", tags: ["Bebida"] },
+  { termo: "VINHO", tags: ["Bebida"] },
+  { termo: "CERVEJA", tags: ["Bebida"] },
+  { termo: "REFRIGERANTE", tags: ["Bebida"] },
+  // Quente sem "Comida" (para a categoria "Quente" funcionar isolada)
+  { termo: "FOGUEIRA", tags: ["Quente"] },
+  { termo: "SAUNA", tags: ["Quente"] },
+  { termo: "DESERTO", tags: ["Quente"] },
+  { termo: "VERÃO", tags: ["Quente"] },
+  { termo: "FERRO DE PASSAR", tags: ["Doméstico", "Eletrônico", "Quente"] },
+  { termo: "CHALEIRA ELÉTRICA", tags: ["Doméstico", "Eletrônico", "Quente"] },
+  // Frio sem "Comida"
+  { termo: "NEVE", tags: ["Frio"] },
+  { termo: "INVERNO", tags: ["Frio"] },
+  { termo: "GELO", tags: ["Comida", "Frio"] },
+  // Corpo (reforço)
+  { termo: "ESTÔMAGO", tags: ["Corpo"] },
+  { termo: "FÍGADO", tags: ["Corpo"] },
+  { termo: "PELE", tags: ["Corpo"] },
+  { termo: "DENTE", tags: ["Corpo"] },
+  { termo: "LÍNGUA", tags: ["Corpo"] },
+  { termo: "NARIZ", tags: ["Corpo"] },
+  { termo: "ORELHA", tags: ["Corpo"] },
+  // Plantas (reforço)
+  { termo: "TULIPA", tags: ["Planta"] },
+  { termo: "JASMIM", tags: ["Planta"] },
+  { termo: "BROMÉLIA", tags: ["Planta"] },
+  { termo: "PINHEIRO", tags: ["Planta", "Verde"] },
+  { termo: "BAMBU", tags: ["Planta", "Verde"] },
+  // Tecidos (reforço)
+  { termo: "POLIÉSTER", tags: ["Tecido", "Material"] },
+  { termo: "NYLON", tags: ["Tecido", "Material"] },
+  { termo: "VELUDO", tags: ["Tecido"] },
+  { termo: "CETIM", tags: ["Tecido"] },
+  { termo: "COBERTOR", tags: ["Doméstico", "Tecido"] },
+  { termo: "ALMOFADA", tags: ["Doméstico", "Tecido"] },
+  // Amarelo (reforço)
+  { termo: "CANÁRIO", tags: ["Animal", "Amarelo"] },
+  { termo: "OVO", tags: ["Comida", "Amarelo"] }
 ];
 
 /* ---------- ESTADO ---------- */
@@ -474,9 +433,7 @@ function apagarSalvamento() {
 }
 
 /* ---------- GERAÇÃO DE FASES ---------- */
-function gerarFase() {
-  if (modoDiario) return gerarFaseDiaria();
-
+function gerarFaseClassica() {
   const categorias = [...new Set(bancoDePalavras.flatMap(item => item.tags))];
   const quantidadeDesejada = Math.min(4, 2 + Math.floor((nivel - 1) / 3));
   const paresPossiveis = [];
@@ -508,22 +465,23 @@ function gerarFase() {
   return null;
 }
 
-function encontrarDesafioDiario(ra, rb) {
-  return desafiosDiarios.find(d => d.regraA === ra && d.regraB === rb) || null;
-}
-
-function criarFaseDoDesafio(desafio) {
-  const palavras = [];
-  Object.values(desafio.grupos).forEach(grupo => {
-    grupo.forEach(([termo, tags]) => palavras.push({ termo, tags }));
-  });
-  return { regraA: desafio.regraA, regraB: desafio.regraB, palavras: embaralhar(palavras) };
+function gerarFase() {
+  if (modoDiario) return gerarFaseDiaria();
+  return gerarFaseClassica();
 }
 
 function gerarFaseDiaria() {
   const hoje = dataLocalISO();
-  const indice = hashTexto("NEXO-DIARIO-DESAFIOS-" + hoje) % desafiosDiarios.length;
-  return criarFaseDoDesafio(desafiosDiarios[indice]);
+  const originalRandom = Math.random;
+  const originalNivel = nivel;
+  Math.random = geradorComSemente(hashTexto("NEXO-DIARIO-" + hoje));
+  nivel = 1; // diário sempre com 8 palavras (2 por região)
+  try {
+    return gerarFaseClassica();
+  } finally {
+    Math.random = originalRandom;
+    nivel = originalNivel;
+  }
 }
 
 /* ---------- RENDERIZAÇÃO ---------- */
@@ -846,25 +804,21 @@ function abrirDesafioDiario() {
   chaveSalvamentoAtual = `nexo-diario-partida-${hoje}`;
   document.getElementById("painel-diario").hidden = false;
   document.getElementById("painel-diario").innerHTML =
-    `<strong>Desafio Diário · ${hoje}</strong><br>O desafio de hoje é igual para todos os jogadores. Complete as palavras e tente bater seu próprio recorde!`;
+    `<strong>Desafio Diário · ${hoje}</strong><br>
+     Um novo conjunto de regras é gerado automaticamente todo dia — igual para todos os jogadores. Volte amanhã!`;
   document.getElementById("botao-modo-diario").classList.add("modo-ativo");
   document.getElementById("botao-modo-normal").classList.remove("modo-ativo");
 
-  const originalRandom = Math.random;
-  Math.random = geradorComSemente(hashTexto("NEXO-DIARIO-" + hoje));
-  try {
-    vidas = VIDAS_INICIAIS;
-    nivel = 1;
-    pontuacao = 0;
-    ofensiva = 0;
-    jogoEncerrado = false;
-    faseConcluida = false;
-    recompensaUsada = false;
-    const salvo = lerSalvamento();
-    if (!salvo || !restaurarPartida(salvo)) iniciarFase();
-  } finally {
-    Math.random = originalRandom;
-  }
+  vidas = VIDAS_INICIAIS;
+  nivel = 1;
+  pontuacao = 0;
+  ofensiva = 0;
+  jogoEncerrado = false;
+  faseConcluida = false;
+  recompensaUsada = false;
+
+  const salvo = lerSalvamento();
+  if (!salvo || !restaurarPartida(salvo)) iniciarFase();
   painelMensagem.textContent = "Desafio diário: as regras e palavras de hoje são fixas.";
 }
 
@@ -921,23 +875,9 @@ document.getElementById("botao-nova-partida").addEventListener("click", () => {
 function restaurarPartida(estado) {
   if (!estado) return false;
 
-  let itens;
-  if (modoDiario) {
-    const desafio = encontrarDesafioDiario(estado.regraA, estado.regraB);
-    if (!desafio) return false;
-    itens = estado.palavrasDaFase.map(termo => {
-      for (const grupo of Object.values(desafio.grupos)) {
-        for (const [t, tags] of grupo) {
-          if (t === termo) return { termo: t, tags };
-        }
-      }
-      return null;
-    }).filter(Boolean);
-  } else {
-    itens = estado.palavrasDaFase.map(termo =>
-      bancoDePalavras.find(item => item.termo === termo)
-    ).filter(Boolean);
-  }
+  const itens = estado.palavrasDaFase.map(termo =>
+    bancoDePalavras.find(item => item.termo === termo)
+  ).filter(Boolean);
   if (itens.length !== estado.palavrasDaFase.length || !itens.length) return false;
 
   vidas = Math.max(0, Math.min(VIDAS_INICIAIS, Number(estado.vidas) || 0));
