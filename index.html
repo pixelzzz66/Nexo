@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#1a1a1a">
   <meta name="description" content="NEXO: um desafio de raciocínio lógico com palavras e diagramas de Venn.">
-
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4355983305322792"
-    crossorigin="anonymous"></script>
-
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
@@ -28,6 +22,11 @@
   </header>
 
   <main>
+    <nav class="modos-jogo" aria-label="Modos de jogo">
+      <button id="botao-modo-normal" class="botao botao-secundario" type="button">Modo clássico</button>
+      <button id="botao-modo-diario" class="botao" type="button">📅 Desafio diário</button>
+    </nav>
+    <section id="painel-diario" class="painel-diario" hidden aria-live="polite"></section>
     <section class="instrucoes">
       <h2>Desafio lógico</h2>
       <p id="mensagem" aria-live="polite">Arraste cada palavra para a região correta.</p>
