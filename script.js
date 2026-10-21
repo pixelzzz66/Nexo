@@ -427,11 +427,25 @@ function gerarFaseDiaria() {
   const hoje = dataLocalISO();
   const indice = hashTexto("NEXO-DIARIO-DESAFIOS-" + hoje) % desafiosDiarios.length;
   const desafio = desafiosDiarios[indice];
+
   const palavras = Object.values(desafio.grupos).flatMap(grupo =>
-    grupo.map(([termo]) => bancoDePalavras.find(item => item.termo === termo))
+    grupo.map(([termo]) =>
+      bancoDePalavras.find(
+        item => item.termo === termo && item.exclusivaDiario === true
+      )
+    )
   ).filter(Boolean);
-  if (palavras.length !== 8) return null;
-  return { regraA: desafio.regraA, regraB: desafio.regraB, palavras: embaralhar(palavras) };
+
+  if (palavras.length !== 8) {
+    console.error("Erro: o desafio diário não encontrou suas 8 palavras exclusivas.");
+    return null;
+  }
+
+  return {
+    regraA: desafio.regraA,
+    regraB: desafio.regraB,
+    palavras: embaralhar(palavras)
+  };
 }
 
 function criarElementoPalavra(item, zonaDestino = "BANCO") {
