@@ -12,6 +12,7 @@ const CHAVE_BACKUP_CAMPANHA = "nexo-campanha-backup-v1";
 const VIDAS_INICIAIS = 3;
 const VIDAS_RECOMPENSA = 3;
 
+// --- BANCO DE PALAVRAS PRINCIPAL (MODO INFINITO) ---
 const bancoDePalavras = [
   { termo: "TOMATE", tags: ["Vermelho", "Comida", "Vegetal"] },
   { termo: "MORANGO", tags: ["Vermelho", "Comida", "Fruta", "Doce"] },
@@ -20,68 +21,68 @@ const bancoDePalavras = [
   { termo: "BETERRABA", tags: ["Vermelho", "Comida", "Vegetal"] },
   { termo: "SANGUE", tags: ["Vermelho", "Corpo"] },
   { termo: "ROSA", tags: ["Vermelho", "Planta"] },
-  { termo: "ALFACE", tags: ["Comida", "Vegetal"] },
+  { termo: "ALFACE", tags: ["Comida", "Vegetal", "Verde"] },
   { termo: "CENOURA", tags: ["Comida", "Vegetal"] },
   { termo: "PÃO", tags: ["Comida"] },
   { termo: "QUEIJO", tags: ["Comida"] },
   { termo: "UVA", tags: ["Comida", "Fruta", "Doce"] },
-  { termo: "MAÇÃ", tags: ["Comida", "Fruta"] },
-  { termo: "BANANA", tags: ["Comida", "Fruta"] },
-  { termo: "LIMÃO", tags: ["Comida", "Fruta"] },
+  { termo: "MAÇÃ", tags: ["Comida", "Fruta", "Vermelho"] },
+  { termo: "BANANA", tags: ["Comida", "Fruta", "Amarelo"] },
+  { termo: "LIMÃO", tags: ["Comida", "Fruta", "Verde"] },
   { termo: "ABACAXI", tags: ["Comida", "Fruta"] },
-  { termo: "MELANCIA", tags: ["Comida", "Fruta"] },
+  { termo: "MELANCIA", tags: ["Comida", "Fruta", "Verde", "Vermelho"] },
   { termo: "CHOCOLATE", tags: ["Comida", "Doce"] },
   { termo: "BOLO", tags: ["Comida", "Doce"] },
   { termo: "MEL", tags: ["Comida", "Doce"] },
-  { termo: "CARRO", tags: ["Veículo", "Tem rodas"] },
+  { termo: "CARRO", tags: ["Veículo", "Tem rodas", "Metal"] },
   { termo: "BICICLETA", tags: ["Veículo", "Tem rodas"] },
-  { termo: "MOTO", tags: ["Veículo", "Tem rodas"] },
+  { termo: "MOTO", tags: ["Veículo", "Tem rodas", "Metal"] },
   { termo: "ÔNIBUS", tags: ["Veículo", "Tem rodas"] },
-  { termo: "TREM", tags: ["Veículo", "Tem rodas"] },
+  { termo: "TREM", tags: ["Veículo", "Tem rodas", "Metal"] },
   { termo: "PATINETE", tags: ["Veículo", "Tem rodas"] },
-  { termo: "AVIÃO", tags: ["Veículo", "Voa", "Tem asas"] },
-  { termo: "HELICÓPTERO", tags: ["Veículo", "Voa"] },
-  { termo: "BARCO", tags: ["Veículo"] },
+  { termo: "AVIÃO", tags: ["Veículo", "Voa", "Tem asas", "Metal"] },
+  { termo: "HELICÓPTERO", tags: ["Veículo", "Voa", "Metal"] },
+  { termo: "BARCO", tags: ["Veículo", "Aquático"] },
   { termo: "MALA COM RODINHAS", tags: ["Tem rodas", "Objeto"] },
   { termo: "CADEIRA DE ESCRITÓRIO", tags: ["Tem rodas", "Doméstico"] },
   { termo: "CACHORRO", tags: ["Animal", "Doméstico"] },
   { termo: "GATO", tags: ["Animal", "Doméstico"] },
   { termo: "GALINHA", tags: ["Animal", "Doméstico", "Tem asas"] },
-  { termo: "PATO", tags: ["Animal", "Doméstico", "Voa", "Tem asas"] },
-  { termo: "LEÃO", tags: ["Animal"] },
-  { termo: "ÁGUIA", tags: ["Animal", "Voa", "Tem asas"] },
-  { termo: "BORBOLETA", tags: ["Animal", "Voa", "Tem asas"] },
-  { termo: "PENGUIM", tags: ["Animal", "Tem asas"] },
-  { termo: "MORCEGO", tags: ["Animal", "Voa"] },
+  { termo: "PATO", tags: ["Animal", "Doméstico", "Voa", "Tem asas", "Aquático"] },
+  { termo: "LEÃO", tags: ["Animal", "Selvagem"] },
+  { termo: "ÁGUIA", tags: ["Animal", "Voa", "Tem asas", "Selvagem"] },
+  { termo: "BORBOLETA", tags: ["Animal", "Voa", "Tem asas", "Inseto"] },
+  { termo: "PINGUIM", tags: ["Animal", "Tem asas", "Aquático"] },
+  { termo: "MORCEGO", tags: ["Animal", "Voa", "Noturno"] },
   { termo: "AVESTRUZ", tags: ["Animal", "Tem asas"] },
-  { termo: "GOLFINHO", tags: ["Animal"] },
+  { termo: "GOLFINHO", tags: ["Animal", "Aquático"] },
   { termo: "CAVALO", tags: ["Animal", "Doméstico"] },
-  { termo: "MESA", tags: ["Doméstico"] },
+  { termo: "MESA", tags: ["Doméstico", "Madeira"] },
   { termo: "SOFÁ", tags: ["Doméstico"] },
   { termo: "CAMA", tags: ["Doméstico"] },
-  { termo: "LÂMPADA", tags: ["Doméstico"] },
-  { termo: "FACA", tags: ["Doméstico"] },
-  { termo: "CHAVE", tags: ["Doméstico"] },
+  { termo: "LÂMPADA", tags: ["Doméstico", "Eletrônico", "Vidro"] },
+  { termo: "FACA", tags: ["Doméstico", "Metal"] },
+  { termo: "CHAVE", tags: ["Doméstico", "Metal"] },
   { termo: "CANETA", tags: ["Escolar"] },
-  { termo: "CADERNO", tags: ["Escolar"] },
-  { termo: "LIVRO", tags: ["Escolar"] },
-  { termo: "LÁPIS", tags: ["Escolar"] },
-  { termo: "VIOLÃO", tags: ["Instrumento", "Musical"] },
+  { termo: "CADERNO", tags: ["Escolar", "Papel"] },
+  { termo: "LIVRO", tags: ["Escolar", "Papel"] },
+  { termo: "LÁPIS", tags: ["Escolar", "Madeira"] },
+  { termo: "VIOLÃO", tags: ["Instrumento", "Musical", "Madeira"] },
   { termo: "PIANO", tags: ["Instrumento", "Musical"] },
   { termo: "FLAUTA", tags: ["Instrumento", "Musical"] },
   { termo: "TAMBOR", tags: ["Instrumento", "Musical"] },
   { termo: "GUITARRA", tags: ["Instrumento", "Musical"] },
   { termo: "LARANJA", tags: ["Comida", "Fruta", "Cor Laranja"] },
-  { termo: "PERA", tags: ["Comida", "Fruta"] },
-  { termo: "MAMÃO", tags: ["Comida", "Fruta"] },
-  { termo: "MANGA", tags: ["Comida", "Fruta"] },
+  { termo: "PERA", tags: ["Comida", "Fruta", "Verde"] },
+  { termo: "MAMÃO", tags: ["Comida", "Fruta", "Cor Laranja"] },
+  { termo: "MANGA", tags: ["Comida", "Fruta", "Amarelo"] },
   { termo: "KIWI", tags: ["Comida", "Fruta", "Verde"] },
   { termo: "COCO", tags: ["Comida", "Fruta"] },
   { termo: "PÊSSEGO", tags: ["Comida", "Fruta"] },
-  { termo: "AMEIXA", tags: ["Comida", "Fruta"] },
+  { termo: "AMEIXA", tags: ["Comida", "Fruta", "Roxo"] },
   { termo: "GOIABA", tags: ["Comida", "Fruta"] },
-  { termo: "MARACUJÁ", tags: ["Comida", "Fruta"] },
-  { termo: "ABÓBORA", tags: ["Comida", "Vegetal"] },
+  { termo: "MARACUJÁ", tags: ["Comida", "Fruta", "Amarelo"] },
+  { termo: "ABÓBORA", tags: ["Comida", "Vegetal", "Cor Laranja"] },
   { termo: "PEPINO", tags: ["Comida", "Vegetal", "Verde"] },
   { termo: "BRÓCOLIS", tags: ["Comida", "Vegetal", "Verde"] },
   { termo: "ESPINAFRE", tags: ["Comida", "Vegetal", "Verde"] },
@@ -94,15 +95,15 @@ const bancoDePalavras = [
   { termo: "MACARRÃO", tags: ["Comida"] },
   { termo: "PIZZA", tags: ["Comida"] },
   { termo: "HAMBÚRGUER", tags: ["Comida"] },
-  { termo: "SOPA", tags: ["Comida"] },
-  { termo: "SORVETE", tags: ["Comida", "Doce"] },
+  { termo: "SOPA", tags: ["Comida", "Quente"] },
+  { termo: "SORVETE", tags: ["Comida", "Doce", "Frio"] },
   { termo: "BISCOITO", tags: ["Comida", "Doce"] },
   { termo: "PUDIM", tags: ["Comida", "Doce"] },
   { termo: "IOGURTE", tags: ["Comida"] },
   { termo: "LEITE", tags: ["Comida", "Bebida"] },
-  { termo: "CAFÉ", tags: ["Comida", "Bebida"] },
-  { termo: "CHÁ", tags: ["Comida", "Bebida"] },
-  { termo: "SUCO", tags: ["Comida", "Bebida"] },
+  { termo: "CAFÉ", tags: ["Comida", "Bebida", "Quente"] },
+  { termo: "CHÁ", tags: ["Comida", "Bebida", "Quente"] },
+  { termo: "SUCO", tags: ["Comida", "Bebida", "Frio"] },
   { termo: "LOBO", tags: ["Animal", "Selvagem"] },
   { termo: "RAPOSA", tags: ["Animal", "Selvagem"] },
   { termo: "URSO", tags: ["Animal", "Selvagem"] },
@@ -113,18 +114,17 @@ const bancoDePalavras = [
   { termo: "MACACO", tags: ["Animal", "Selvagem"] },
   { termo: "COELHO", tags: ["Animal", "Doméstico"] },
   { termo: "HAMSTER", tags: ["Animal", "Doméstico"] },
-  { termo: "TARTARUGA", tags: ["Animal"] },
+  { termo: "TARTARUGA", tags: ["Animal", "Verde"] },
   { termo: "COBRA", tags: ["Animal"] },
-  { termo: "SAPO", tags: ["Animal"] },
+  { termo: "SAPO", tags: ["Animal", "Verde"] },
   { termo: "BALEIA", tags: ["Animal", "Aquático"] },
-  { termo: "TUBARÃO", tags: ["Animal", "Aquático"] },
+  { termo: "TUBARÃO", tags: ["Animal", "Aquático", "Selvagem"] },
   { termo: "POLVO", tags: ["Animal", "Aquático"] },
-  { termo: "CARANGUEJO", tags: ["Animal", "Aquático"] },
+  { termo: "CARANGUEJO", tags: ["Animal", "Aquático", "Vermelho"] },
   { termo: "FORMIGA", tags: ["Animal", "Inseto"] },
-  { termo: "ABELHA", tags: ["Animal", "Inseto", "Voa"] },
+  { termo: "ABELHA", tags: ["Animal", "Inseto", "Voa", "Amarelo"] },
   { termo: "MOSQUITO", tags: ["Animal", "Inseto", "Voa"] },
   { termo: "ARANHA", tags: ["Animal", "Inseto"] },
-  { termo: "PINGUIM", tags: ["Animal", "Tem asas"] },
   { termo: "CAMINHÃO", tags: ["Veículo", "Tem rodas"] },
   { termo: "VAN", tags: ["Veículo", "Tem rodas"] },
   { termo: "TRATOR", tags: ["Veículo", "Tem rodas"] },
@@ -133,35 +133,35 @@ const bancoDePalavras = [
   { termo: "SUBMARINO", tags: ["Veículo", "Aquático"] },
   { termo: "FOGUETE", tags: ["Veículo", "Voa", "Espaço"] },
   { termo: "BALÃO", tags: ["Veículo", "Voa"] },
-  { termo: "PRANCHA", tags: ["Objeto"] },
-  { termo: "SKATE", tags: ["Veículo", "Tem rodas"] },
-  { termo: "TESOURA", tags: ["Escolar", "Ferramenta"] },
+  { termo: "PRANCHA", tags: ["Objeto", "Aquático"] },
+  { termo: "SKATE", tags: ["Veículo", "Tem rodas", "Esporte"] },
+  { termo: "TESOURA", tags: ["Escolar", "Ferramenta", "Metal"] },
   { termo: "BORRACHA", tags: ["Escolar"] },
   { termo: "RÉGUA", tags: ["Escolar"] },
   { termo: "MOCHILA", tags: ["Escolar", "Objeto"] },
   { termo: "APONTADOR", tags: ["Escolar"] },
   { termo: "COMPUTADOR", tags: ["Tecnologia", "Eletrônico"] },
-  { termo: "CELULAR", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "CELULAR", tags: ["Tecnologia", "Eletrônico", "Comunicação"] },
   { termo: "TABLET", tags: ["Tecnologia", "Eletrônico"] },
   { termo: "TELEVISÃO", tags: ["Tecnologia", "Eletrônico"] },
-  { termo: "RÁDIO", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "RÁDIO", tags: ["Tecnologia", "Eletrônico", "Comunicação"] },
   { termo: "CÂMERA", tags: ["Tecnologia", "Eletrônico"] },
   { termo: "FONE DE OUVIDO", tags: ["Tecnologia", "Eletrônico"] },
   { termo: "RELÓGIO", tags: ["Objeto"] },
-  { termo: "ÓCULOS", tags: ["Objeto"] },
+  { termo: "ÓCULOS", tags: ["Objeto", "Vidro"] },
   { termo: "GUARDA-CHUVA", tags: ["Objeto"] },
   { termo: "ESCOVA", tags: ["Doméstico"] },
   { termo: "TOALHA", tags: ["Doméstico"] },
   { termo: "TRAVESSEIRO", tags: ["Doméstico"] },
-  { termo: "GELADEIRA", tags: ["Doméstico", "Eletrônico"] },
-  { termo: "FOGÃO", tags: ["Doméstico", "Eletrônico"] },
+  { termo: "GELADEIRA", tags: ["Doméstico", "Eletrônico", "Frio"] },
+  { termo: "FOGÃO", tags: ["Doméstico", "Eletrônico", "Quente"] },
   { termo: "ASPIRADOR", tags: ["Doméstico", "Eletrônico"] },
-  { termo: "VIOLINO", tags: ["Instrumento", "Musical"] },
-  { termo: "VIOLONCELO", tags: ["Instrumento", "Musical"] },
+  { termo: "VIOLINO", tags: ["Instrumento", "Musical", "Madeira"] },
+  { termo: "VIOLONCELO", tags: ["Instrumento", "Musical", "Madeira"] },
   { termo: "HARPA", tags: ["Instrumento", "Musical"] },
-  { termo: "SAXOFONE", tags: ["Instrumento", "Musical"] },
-  { termo: "TROMPETE", tags: ["Instrumento", "Musical"] },
-  { termo: "UKULELE", tags: ["Instrumento", "Musical"] },
+  { termo: "SAXOFONE", tags: ["Instrumento", "Musical", "Metal"] },
+  { termo: "TROMPETE", tags: ["Instrumento", "Musical", "Metal"] },
+  { termo: "UKULELE", tags: ["Instrumento", "Musical", "Madeira"] },
   { termo: "FUTEBOL", tags: ["Esporte"] },
   { termo: "BASQUETE", tags: ["Esporte"] },
   { termo: "VÔLEI", tags: ["Esporte"] },
@@ -175,20 +175,20 @@ const bancoDePalavras = [
   { termo: "MERCÚRIO", tags: ["Espaço", "Planeta"] },
   { termo: "VÊNUS", tags: ["Espaço", "Planeta"] },
   { termo: "TERRA", tags: ["Espaço", "Planeta"] },
-  { termo: "MARTE", tags: ["Espaço", "Planeta"] },
+  { termo: "MARTE", tags: ["Espaço", "Planeta", "Vermelho"] },
   { termo: "JÚPITER", tags: ["Espaço", "Planeta"] },
   { termo: "SATURNO", tags: ["Espaço", "Planeta"] },
   { termo: "URANO", tags: ["Espaço", "Planeta"] },
-  { termo: "NETUNO", tags: ["Espaço", "Planeta"] },
+  { termo: "NETUNO", tags: ["Espaço", "Planeta", "Azul"] },
   { termo: "LUA", tags: ["Espaço"] },
-  { termo: "SOL", tags: ["Espaço", "Estrela"] },
+  { termo: "SOL", tags: ["Espaço", "Estrela", "Quente"] },
   { termo: "ESTRELA", tags: ["Espaço", "Estrela"] },
   { termo: "COMETA", tags: ["Espaço"] },
   { termo: "ASTEROIDE", tags: ["Espaço"] },
-  { termo: "OURO", tags: ["Metal"] },
-  { termo: "PRATA", tags: ["Metal"] },
-  { termo: "FERRO", tags: ["Metal"] },
-  { termo: "COBRE", tags: ["Metal"] },
+  { termo: "OURO", tags: ["Metal", "Amarelo"] },
+  { termo: "PRATA", tags: ["Metal", "Cinza"] },
+  { termo: "FERRO", tags: ["Metal", "Cinza"] },
+  { termo: "COBRE", tags: ["Metal", "Cor Laranja"] },
   { termo: "VIDRO", tags: ["Material"] },
   { termo: "MADEIRA", tags: ["Material"] },
   { termo: "PLÁSTICO", tags: ["Material"] },
@@ -196,24 +196,24 @@ const bancoDePalavras = [
   { termo: "ALGODÃO", tags: ["Material", "Tecido"] },
   { termo: "LÃ", tags: ["Material", "Tecido"] },
   { termo: "SEDA", tags: ["Material", "Tecido"] },
-  { termo: "MÉDICO", tags: ["Profissão"] },
+  { termo: "MÉDICO", tags: ["Profissão", "Corpo"] },
   { termo: "PROFESSOR", tags: ["Profissão", "Escolar"] },
   { termo: "COZINHEIRO", tags: ["Profissão", "Comida"] },
   { termo: "MOTORISTA", tags: ["Profissão", "Veículo"] },
-  { termo: "BOMBEIRO", tags: ["Profissão"] },
+  { termo: "BOMBEIRO", tags: ["Profissão", "Fogo"] },
   { termo: "POLICIAL", tags: ["Profissão"] },
   { termo: "DENTISTA", tags: ["Profissão", "Corpo"] },
   { termo: "ARQUITETO", tags: ["Profissão"] },
   { termo: "ENGENHEIRO", tags: ["Profissão"] },
-  { termo: "JORNALISTA", tags: ["Profissão"] },
+  { termo: "JORNALISTA", tags: ["Profissão", "Comunicação"] },
   { termo: "VERDE", tags: ["Cor"] },
   { termo: "AZUL", tags: ["Cor"] },
-  { termo: "AMARELO", tags: ["Cor", "Cor Laranja"] },
+  { termo: "AMARELO", tags: ["Cor"] },
   { termo: "ROXO", tags: ["Cor"] },
   { termo: "BRANCO", tags: ["Cor"] },
   { termo: "PRETO", tags: ["Cor"] },
   { termo: "CINZA", tags: ["Cor"] },
-  { termo: "ROSA-CHOQUE", tags: ["Cor"] },
+  { termo: "ROSA-CHOQUE", tags: ["Cor", "Rosa"] },
   { termo: "CÍRCULO", tags: ["Forma"] },
   { termo: "QUADRADO", tags: ["Forma"] },
   { termo: "TRIÂNGULO", tags: ["Forma"] },
@@ -222,68 +222,59 @@ const bancoDePalavras = [
   { termo: "ESFERA", tags: ["Forma"] }
 ];
 
-// Banco exclusivo do Desafio Diário. Estas palavras não entram na campanha clássica.
+// --- CATÁLOGO DE FASES DO MODO DIÁRIO (Expandido) ---
 const desafiosDiarios = [
-  {
-    regraA: "Funciona com eletricidade",
-    regraB: "Cabe em uma mochila",
-    grupos: {
-      A: [["GELADEIRA MINI", ["Funciona com eletricidade"]], ["LAVADORA", ["Funciona com eletricidade"]]],
-      B: [["CADERNO DE BOLSO", ["Cabe em uma mochila"]], ["GARRAFA", ["Cabe em uma mochila"]]],
-      AB: [["CELULAR DE BOLSO", ["Funciona com eletricidade", "Cabe em uma mochila"]], ["CALCULADORA", ["Funciona com eletricidade", "Cabe em uma mochila"]]],
-      N: [["PEDRA", []], ["COLHER DE MADEIRA", []]]
-    }
-  },
-  {
-    regraA: "É usado na cozinha",
-    regraB: "Pode ser feito de metal",
-    grupos: {
-      A: [["ESPONJA", ["É usado na cozinha"]], ["PANO DE PRATO", ["É usado na cozinha"]]],
-      B: [["MOEDA", ["Pode ser feito de metal"]], ["PARAFUSO", ["Pode ser feito de metal"]]],
-      AB: [["PANELA", ["É usado na cozinha", "Pode ser feito de metal"]], ["GARFO", ["É usado na cozinha", "Pode ser feito de metal"]]],
-      N: [["TRAVESSEIRO", []], ["BOLA DE FUTEBOL", []]]
-    }
-  },
-  {
-    regraA: "É encontrado na natureza",
-    regraB: "É usado para escrever",
-    grupos: {
-      A: [["CACHOEIRA", ["É encontrado na natureza"]], ["MONTANHA", ["É encontrado na natureza"]]],
-      B: [["CANETA ARTESANAL", ["É usado para escrever"]], ["MARCADOR", ["É usado para escrever"]]],
-      AB: [["LÁPIS DE CARVÃO", ["É encontrado na natureza", "É usado para escrever"]], ["GIZ", ["É encontrado na natureza", "É usado para escrever"]]],
-      N: [["MICRO-ONDAS", []], ["CHINELO", []]]
-    }
-  },
-  {
-    regraA: "Tem rodas",
-    regraB: "Transporta pessoas",
-    grupos: {
-      A: [["CARRINHO DE MÃO", ["Tem rodas"]], ["CARRINHO DE SUPERMERCADO", ["Tem rodas"]]],
-      B: [["ELEVADOR", ["Transporta pessoas"]], ["ESCADA ROLANTE", ["Transporta pessoas"]]],
-      AB: [["ÔNIBUS URBANO", ["Tem rodas", "Transporta pessoas"]], ["BICICLETA DE DOIS LUGARES", ["Tem rodas", "Transporta pessoas"]]],
-      N: [["LIVRO", []], ["ABACAXI", []]]
-    }
-  },
-  {
-    regraA: "É um ser vivo",
-    regraB: "Pode voar",
-    grupos: {
-      A: [["ÁRVORE", ["É um ser vivo"]], ["MINHOCA", ["É um ser vivo"]]],
-      B: [["AVIÃO DE PAPEL", ["Pode voar"]], ["PIPA", ["Pode voar"]]],
-      AB: [["ABELHA-DIÁRIO", ["É um ser vivo", "Pode voar"]], ["MORCEGO-DIÁRIO", ["É um ser vivo", "Pode voar"]]],
-      N: [["CADEIRA", []], ["PEDRA-POMES", []]]
-    }
-  }
+  // Dia 1
+  { regraA: "Água", regraB: "Animal", palavras: [
+      { termo: "PEIXE", tags: ["Animal", "Água"] }, { termo: "BALEIA", tags: ["Animal", "Água"] },
+      { termo: "GELO", tags: ["Água"] }, { termo: "BARCO", tags: ["Água"] },
+      { termo: "GATO", tags: ["Animal"] }, { termo: "CACHORRO", tags: ["Animal"] }
+  ]},
+  // Dia 2
+  { regraA: "Tecnologia", regraB: "Comunicação", palavras: [
+      { termo: "CELULAR", tags: ["Tecnologia", "Comunicação"] }, { termo: "RÁDIO", tags: ["Tecnologia", "Comunicação"] },
+      { termo: "COMPUTADOR", tags: ["Tecnologia"] }, { termo: "VIDEOGAME", tags: ["Tecnologia"] },
+      { termo: "CARTA", tags: ["Comunicação"] }, { termo: "FALA", tags: ["Comunicação"] }
+  ]},
+  // Dia 3
+  { regraA: "Quente", regraB: "Comida", palavras: [
+      { termo: "CAFÉ", tags: ["Quente", "Comida"] }, { termo: "SOPA", tags: ["Quente", "Comida"] },
+      { termo: "FOGO", tags: ["Quente"] }, { termo: "SOL", tags: ["Quente"] },
+      { termo: "SALADA", tags: ["Comida"] }, { termo: "MAÇÃ", tags: ["Comida"] }
+  ]},
+  // Dia 4
+  { regraA: "Espaço", regraB: "Veículo", palavras: [
+      { termo: "FOGUETE", tags: ["Espaço", "Veículo"] }, { termo: "SATÉLITE", tags: ["Espaço", "Veículo"] },
+      { termo: "LUA", tags: ["Espaço"] }, { termo: "ESTRELA", tags: ["Espaço"] },
+      { termo: "CARRO", tags: ["Veículo"] }, { termo: "MOTO", tags: ["Veículo"] }
+  ]},
+  // Dia 5
+  { regraA: "Verde", regraB: "Comida", palavras: [
+      { termo: "ALFACE", tags: ["Verde", "Comida"] }, { termo: "BRÓCOLIS", tags: ["Verde", "Comida"] },
+      { termo: "GRAMA", tags: ["Verde"] }, { termo: "FOLHA", tags: ["Verde"] },
+      { termo: "PÃO", tags: ["Comida"] }, { termo: "ARROZ", tags: ["Comida"] }
+  ]},
+  // Dia 6
+  { regraA: "Musical", regraB: "Madeira", palavras: [
+      { termo: "VIOLÃO", tags: ["Musical", "Madeira"] }, { termo: "VIOLINO", tags: ["Musical", "Madeira"] },
+      { termo: "MESA", tags: ["Madeira"] }, { termo: "CADEIRA", tags: ["Madeira"] },
+      { termo: "CANTO", tags: ["Musical"] }, { termo: "MICROFONE", tags: ["Musical"] }
+  ]},
+  // Dia 7
+  { regraA: "Ferramenta", regraB: "Metal", palavras: [
+      { termo: "MARTELO", tags: ["Ferramenta", "Metal"] }, { termo: "CHAVE", tags: ["Ferramenta", "Metal"] },
+      { termo: "MOEDA", tags: ["Metal"] }, { termo: "ANEL", tags: ["Metal"] },
+      { termo: "VASSOURA", tags: ["Ferramenta"] }, { termo: "RODO", tags: ["Ferramenta"] }
+  ]}
 ];
 
+// CORREÇÃO: Mapeia as palavras diárias corretamente sem usar Object.values quebrando o código
 const palavrasExclusivasDiarias = desafiosDiarios.flatMap(desafio =>
-  Object.values(desafio.grupos).flatMap(grupo =>
-    grupo.map(([termo, tags]) => ({ termo, tags, exclusivaDiario: true }))
-  )
+  desafio.palavras.map(p => ({ termo: p.termo, tags: p.tags, exclusivaDiario: true }))
 );
 bancoDePalavras.push(...palavrasExclusivasDiarias);
 
-
+// --- ESTADO DO JOGO ---
 let vidas = VIDAS_INICIAIS;
 let nivel = 1;
 let pontuacao = 0;
@@ -422,22 +413,18 @@ function gerarFase() {
   return null;
 }
 
-
 function gerarFaseDiaria() {
   const hoje = dataLocalISO();
   const indice = hashTexto("NEXO-DIARIO-DESAFIOS-" + hoje) % desafiosDiarios.length;
   const desafio = desafiosDiarios[indice];
 
-  const palavras = Object.values(desafio.grupos).flatMap(grupo =>
-    grupo.map(([termo]) =>
-      bancoDePalavras.find(
-        item => item.termo === termo && item.exclusivaDiario === true
-      )
-    )
+  // CORREÇÃO: Busca as palavras diretamente da lista do desafio do dia
+  const palavras = desafio.palavras.map(p =>
+    bancoDePalavras.find(item => item.termo === p.termo && item.exclusivaDiario === true)
   ).filter(Boolean);
 
-  if (palavras.length !== 8) {
-    console.error("Erro: o desafio diário não encontrou suas 8 palavras exclusivas.");
+  if (palavras.length < desafio.palavras.length) {
+    console.error("Erro: o desafio diário não encontrou todas as suas palavras exclusivas.");
     return null;
   }
 
@@ -478,8 +465,11 @@ function criarElementoPalavra(item, zonaDestino = "BANCO") {
     termoSelecionado = item.termo;
     painelMensagem.textContent = `Palavra ${item.termo} selecionada. Agora toque na região correta.`;
   });
+  
+  // NOVIDADE: Adiciona a classe de símbolo se a palavra já vier carregada num círculo (Salvamento Local)
   if (zonaDestino !== "BANCO") {
     palavra.classList.add("acertada");
+    palavra.classList.add("palavra-alocada");
     palavra.draggable = false;
   }
   return palavra;
@@ -490,7 +480,6 @@ function renderizarPalavras(regioes = {}) {
   zonas.forEach(zona => {
     zona.querySelectorAll(".palavra").forEach(el => el.remove());
   });
-  // Mantém os rótulos dentro das regiões após limpar as palavras.
   const destino = { A: document.querySelector('.circulo-a[data-zona="A"]'), B: document.querySelector('.circulo-b[data-zona="B"]'), AB: document.querySelector('.intersecao[data-zona="AB"]'), N: document.querySelector('.zona-nenhuma[data-zona="N"]') };
   palavrasDaFase.forEach(item => {
     const regiao = regioes[item.termo] || "BANCO";
@@ -557,12 +546,10 @@ function encerrarJogo() {
     { texto: "Testar recompensa (+3 vidas)", classe: "botao", acao: simularAnuncioRecompensado, desabilitado: recompensaUsada },
     { texto: "Começar nova partida", classe: "botao botao-secundario", acao: novaPartida }
   ];
-  mostrarMensagem("Fim de jogo! 💔", `Você chegou ao nível ${nivel} e fez ${pontuacao} pontos. A recompensa ainda está em modo de demonstração: nenhum anúncio real será exibido.`, botoes);
+  mostrarMensagem("Fim de jogo! 💔", `Você chegou ao nível ${nivel} e fez ${pontuacao} pontos. A recompensa ainda está em modo de demonstração.`, botoes);
   salvarProgresso();
 }
 
-// Protótipo: simula a confirmação de um anúncio recompensado.
-// Na integração real, só chamar a recompensa após o provedor confirmar a conclusão do anúncio.
 function simularAnuncioRecompensado() {
   if (!jogoEncerrado || recompensaUsada) return;
   recompensaUsada = true;
@@ -577,7 +564,7 @@ function simularAnuncioRecompensado() {
   });
   atualizarPainel();
   painelMensagem.textContent = "Modo demonstração: 3 vidas restauradas. Você continua na mesma fase.";
-  mostrarMensagem("Você voltou! ❤️", "3 vidas restauradas. Suas palavras já classificadas, pontuação, nível e estado da ofensiva foram preservados. A recompensa foi simulada, sem anúncio real.", [
+  mostrarMensagem("Você voltou! ❤️", "3 vidas restauradas. Suas palavras já classificadas, pontuação, nível e estado da ofensiva foram preservados.", [
     { texto: "Continuar jogando", classe: "botao", acao: () => { esconderMensagem(); painelMensagem.textContent = "Continue de onde parou!"; salvarProgresso(); } }
   ]);
   salvarProgresso();
@@ -586,7 +573,7 @@ function simularAnuncioRecompensado() {
 function registrarErro(palavra) {
   palavra.style.backgroundColor = "#ff4757";
   vidas = Math.max(0, vidas - 1);
-  ofensiva = 0; // Erros continuam zerando a ofensiva, conforme a regra atual do jogo.
+  ofensiva = 0; 
   atualizarPainel();
   salvarProgresso();
   if (vidas === 0) {
@@ -601,6 +588,10 @@ function registrarErro(palavra) {
 
 function registrarAcerto(palavra, zona) {
   palavra.classList.add("acertada");
+  
+  // NOVIDADE: Adiciona a classe que transforma a palavra no símbolo ✔️
+  palavra.classList.add("palavra-alocada");
+  
   palavra.classList.remove("selecionada");
   palavra.draggable = false;
   palavra.style.opacity = "1";
@@ -624,7 +615,7 @@ function concluirFase() {
     travarPalavras();
     atualizarPainel();
     const registro = { data: dataLocalISO(), pontuacao, regraA, regraB, concluido: true };
-    try { localStorage.setItem(CHAVE_DIARIO, JSON.stringify(registro)); } catch (e) {}
+    try { localStorage.setItem(CHCHAVE_DIARIO, JSON.stringify(registro)); } catch (e) {}
     mostrarMensagem("Desafio diário concluído! 🏆", `Você completou o desafio de hoje e fez ${pontuacao} pontos. Volte amanhã para um novo desafio!`, [
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
@@ -697,10 +688,12 @@ function dataLocalISO() {
   return `${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,"0")}-${String(agora.getDate()).padStart(2,"0")}`;
 }
 function geradorComSemente(semente) {
-  let estado = seemente >>> 0;
+  // CORREÇÃO: Variável de entrada estava grafada "seemente"
+  let estado = semente >>> 0;
   return function() { estado = (estado * 1664525 + 1013904223) >>> 0; return estado / 4294967296; };
 }
 function hashTexto(texto) { let h = 2166136261; for (let i=0;i<texto.length;i++) { h ^= texto.charCodeAt(i); h = Math.imul(h,16777619); } return h >>> 0; }
+
 function abrirDesafioDiario() {
   const hoje = dataLocalISO();
   let registro = null;
@@ -711,7 +704,6 @@ function abrirDesafioDiario() {
     mostrarMensagem("Desafio diário concluído", `Sua pontuação de hoje foi ${registro.pontuacao}. Volte amanhã para jogar novamente.`, [{texto:"Voltar ao modo clássico",classe:"botao botao-secundario",acao:voltarModoClassico}]);
     return;
   }
-  // Mantém uma cópia do progresso clássico antes de mudar para o modo diário.
   try {
     const campanha = localStorage.getItem(CHAVE_SALVAMENTO);
     if (campanha) localStorage.setItem(CHAVE_BACKUP_CAMPANHA, campanha);
@@ -731,6 +723,7 @@ function abrirDesafioDiario() {
   } finally { Math.random = originalRandom; }
   painelMensagem.textContent = "Desafio diário: as regras e palavras de hoje são fixas.";
 }
+
 function voltarModoClassico() {
   if (temporizadorFase) clearTimeout(temporizadorFase);
   modoDiario = false;
@@ -747,8 +740,14 @@ function voltarModoClassico() {
     if (!salvo || !restaurarPartida(salvo)) iniciarFase();
   }
 }
-document.getElementById("botao-modo-diario").addEventListener("click", abrirDesafioDiario);
-document.getElementById("botao-modo-normal").addEventListener("click", () => {
+
+// Botões podem não existir no HTML básico que testamos, mas se existirem, isso previne erros:
+const btnDiario = document.getElementById("botao-modo-diario");
+const btnNormal = document.getElementById("botao-modo-normal");
+const btnNovaPartida = document.getElementById("botao-nova-partida");
+
+if(btnDiario) btnDiario.addEventListener("click", abrirDesafioDiario);
+if(btnNormal) btnNormal.addEventListener("click", () => {
   if (modoDiario) voltarModoClassico();
   else { document.getElementById("painel-diario").hidden = true; }
 });
@@ -766,15 +765,17 @@ function novaPartida() {
   iniciarFase();
 }
 
-document.getElementById("botao-nova-partida").addEventListener("click", () => {
-  const existeProgresso = nivel > 1 || pontuacao > 0 || palavrasRestantes !== palavrasDaFase.length;
-  if (existeProgresso && !jogoEncerrado && !faseConcluida) {
-    mostrarMensagem("Começar de novo?", "Sua partida atual será reiniciada. O progresso salvo será substituído.", [
-      { texto: "Sim, nova partida", classe: "botao", acao: novaPartida },
-      { texto: "Continuar partida", classe: "botao botao-secundario", acao: esconderMensagem }
-    ]);
-  } else novaPartida();
-});
+if (btnNovaPartida) {
+  btnNovaPartida.addEventListener("click", () => {
+    const existeProgresso = nivel > 1 || pontuacao > 0 || palavrasRestantes !== palavrasDaFase.length;
+    if (existeProgresso && !jogoEncerrado && !faseConcluida) {
+      mostrarMensagem("Começar de novo?", "Sua partida atual será reiniciada. O progresso salvo será substituído.", [
+        { texto: "Sim, nova partida", classe: "botao", acao: novaPartida },
+        { texto: "Continuar partida", classe: "botao botao-secundario", acao: esconderMensagem }
+      ]);
+    } else novaPartida();
+  });
+}
 
 function restaurarPartida(estado) {
   const itens = estado.palavrasDaFase.map(termo => bancoDePalavras.find(item => item.termo === termo)).filter(Boolean);
@@ -815,7 +816,6 @@ function restaurarPartida(estado) {
   return true;
 }
 
-// Registro do service worker: necessário para cache offline e recursos de PWA.
 if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js").catch(() => {
