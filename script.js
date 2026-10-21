@@ -5,6 +5,10 @@
    ========================================= */
 
 const CHAVE_SALVAMENTO = "nexo-progresso-v1";
+let chaveSalvamentoAtual = CHAVE_SALVAMENTO;
+let modoDiario = false;
+const CHAVE_DIARIO = "nexo-diario-v1";
+const CHAVE_BACKUP_CAMPANHA = "nexo-campanha-backup-v1";
 const VIDAS_INICIAIS = 3;
 const VIDAS_RECOMPENSA = 3;
 
@@ -66,7 +70,156 @@ const bancoDePalavras = [
   { termo: "PIANO", tags: ["Instrumento", "Musical"] },
   { termo: "FLAUTA", tags: ["Instrumento", "Musical"] },
   { termo: "TAMBOR", tags: ["Instrumento", "Musical"] },
-  { termo: "GUITARRA", tags: ["Instrumento", "Musical"] }
+  { termo: "GUITARRA", tags: ["Instrumento", "Musical"] },
+  { termo: "LARANJA", tags: ["Comida", "Fruta", "Cor Laranja"] },
+  { termo: "PERA", tags: ["Comida", "Fruta"] },
+  { termo: "MAMÃO", tags: ["Comida", "Fruta"] },
+  { termo: "MANGA", tags: ["Comida", "Fruta"] },
+  { termo: "KIWI", tags: ["Comida", "Fruta", "Verde"] },
+  { termo: "COCO", tags: ["Comida", "Fruta"] },
+  { termo: "PÊSSEGO", tags: ["Comida", "Fruta"] },
+  { termo: "AMEIXA", tags: ["Comida", "Fruta"] },
+  { termo: "GOIABA", tags: ["Comida", "Fruta"] },
+  { termo: "MARACUJÁ", tags: ["Comida", "Fruta"] },
+  { termo: "ABÓBORA", tags: ["Comida", "Vegetal"] },
+  { termo: "PEPINO", tags: ["Comida", "Vegetal", "Verde"] },
+  { termo: "BRÓCOLIS", tags: ["Comida", "Vegetal", "Verde"] },
+  { termo: "ESPINAFRE", tags: ["Comida", "Vegetal", "Verde"] },
+  { termo: "BATATA", tags: ["Comida", "Vegetal"] },
+  { termo: "CEBOLA", tags: ["Comida", "Vegetal"] },
+  { termo: "ALHO", tags: ["Comida", "Vegetal"] },
+  { termo: "MILHO", tags: ["Comida", "Vegetal", "Amarelo"] },
+  { termo: "ARROZ", tags: ["Comida"] },
+  { termo: "FEIJÃO", tags: ["Comida"] },
+  { termo: "MACARRÃO", tags: ["Comida"] },
+  { termo: "PIZZA", tags: ["Comida"] },
+  { termo: "HAMBÚRGUER", tags: ["Comida"] },
+  { termo: "SOPA", tags: ["Comida"] },
+  { termo: "SORVETE", tags: ["Comida", "Doce"] },
+  { termo: "BISCOITO", tags: ["Comida", "Doce"] },
+  { termo: "PUDIM", tags: ["Comida", "Doce"] },
+  { termo: "IOGURTE", tags: ["Comida"] },
+  { termo: "LEITE", tags: ["Comida", "Bebida"] },
+  { termo: "CAFÉ", tags: ["Comida", "Bebida"] },
+  { termo: "CHÁ", tags: ["Comida", "Bebida"] },
+  { termo: "SUCO", tags: ["Comida", "Bebida"] },
+  { termo: "LOBO", tags: ["Animal", "Selvagem"] },
+  { termo: "RAPOSA", tags: ["Animal", "Selvagem"] },
+  { termo: "URSO", tags: ["Animal", "Selvagem"] },
+  { termo: "TIGRE", tags: ["Animal", "Selvagem"] },
+  { termo: "ELEFANTE", tags: ["Animal", "Selvagem"] },
+  { termo: "GIRAFA", tags: ["Animal", "Selvagem"] },
+  { termo: "ZEBRA", tags: ["Animal", "Selvagem"] },
+  { termo: "MACACO", tags: ["Animal", "Selvagem"] },
+  { termo: "COELHO", tags: ["Animal", "Doméstico"] },
+  { termo: "HAMSTER", tags: ["Animal", "Doméstico"] },
+  { termo: "TARTARUGA", tags: ["Animal"] },
+  { termo: "COBRA", tags: ["Animal"] },
+  { termo: "SAPO", tags: ["Animal"] },
+  { termo: "BALEIA", tags: ["Animal", "Aquático"] },
+  { termo: "TUBARÃO", tags: ["Animal", "Aquático"] },
+  { termo: "POLVO", tags: ["Animal", "Aquático"] },
+  { termo: "CARANGUEJO", tags: ["Animal", "Aquático"] },
+  { termo: "FORMIGA", tags: ["Animal", "Inseto"] },
+  { termo: "ABELHA", tags: ["Animal", "Inseto", "Voa"] },
+  { termo: "MOSQUITO", tags: ["Animal", "Inseto", "Voa"] },
+  { termo: "ARANHA", tags: ["Animal", "Inseto"] },
+  { termo: "PINGUIM", tags: ["Animal", "Tem asas"] },
+  { termo: "CAMINHÃO", tags: ["Veículo", "Tem rodas"] },
+  { termo: "VAN", tags: ["Veículo", "Tem rodas"] },
+  { termo: "TRATOR", tags: ["Veículo", "Tem rodas"] },
+  { termo: "METRÔ", tags: ["Veículo", "Tem rodas"] },
+  { termo: "FERRY", tags: ["Veículo", "Aquático"] },
+  { termo: "SUBMARINO", tags: ["Veículo", "Aquático"] },
+  { termo: "FOGUETE", tags: ["Veículo", "Voa", "Espaço"] },
+  { termo: "BALÃO", tags: ["Veículo", "Voa"] },
+  { termo: "PRANCHA", tags: ["Objeto"] },
+  { termo: "SKATE", tags: ["Veículo", "Tem rodas"] },
+  { termo: "TESOURA", tags: ["Escolar", "Ferramenta"] },
+  { termo: "BORRACHA", tags: ["Escolar"] },
+  { termo: "RÉGUA", tags: ["Escolar"] },
+  { termo: "MOCHILA", tags: ["Escolar", "Objeto"] },
+  { termo: "APONTADOR", tags: ["Escolar"] },
+  { termo: "COMPUTADOR", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "CELULAR", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "TABLET", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "TELEVISÃO", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "RÁDIO", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "CÂMERA", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "FONE DE OUVIDO", tags: ["Tecnologia", "Eletrônico"] },
+  { termo: "RELÓGIO", tags: ["Objeto"] },
+  { termo: "ÓCULOS", tags: ["Objeto"] },
+  { termo: "GUARDA-CHUVA", tags: ["Objeto"] },
+  { termo: "ESCOVA", tags: ["Doméstico"] },
+  { termo: "TOALHA", tags: ["Doméstico"] },
+  { termo: "TRAVESSEIRO", tags: ["Doméstico"] },
+  { termo: "GELADEIRA", tags: ["Doméstico", "Eletrônico"] },
+  { termo: "FOGÃO", tags: ["Doméstico", "Eletrônico"] },
+  { termo: "ASPIRADOR", tags: ["Doméstico", "Eletrônico"] },
+  { termo: "VIOLINO", tags: ["Instrumento", "Musical"] },
+  { termo: "VIOLONCELO", tags: ["Instrumento", "Musical"] },
+  { termo: "HARPA", tags: ["Instrumento", "Musical"] },
+  { termo: "SAXOFONE", tags: ["Instrumento", "Musical"] },
+  { termo: "TROMPETE", tags: ["Instrumento", "Musical"] },
+  { termo: "UKULELE", tags: ["Instrumento", "Musical"] },
+  { termo: "FUTEBOL", tags: ["Esporte"] },
+  { termo: "BASQUETE", tags: ["Esporte"] },
+  { termo: "VÔLEI", tags: ["Esporte"] },
+  { termo: "TÊNIS", tags: ["Esporte"] },
+  { termo: "NATAÇÃO", tags: ["Esporte", "Aquático"] },
+  { termo: "CORRIDA", tags: ["Esporte"] },
+  { termo: "CICLISMO", tags: ["Esporte", "Veículo"] },
+  { termo: "SURFE", tags: ["Esporte", "Aquático"] },
+  { termo: "XADREZ", tags: ["Jogo"] },
+  { termo: "DOMINÓ", tags: ["Jogo"] },
+  { termo: "MERCÚRIO", tags: ["Espaço", "Planeta"] },
+  { termo: "VÊNUS", tags: ["Espaço", "Planeta"] },
+  { termo: "TERRA", tags: ["Espaço", "Planeta"] },
+  { termo: "MARTE", tags: ["Espaço", "Planeta"] },
+  { termo: "JÚPITER", tags: ["Espaço", "Planeta"] },
+  { termo: "SATURNO", tags: ["Espaço", "Planeta"] },
+  { termo: "URANO", tags: ["Espaço", "Planeta"] },
+  { termo: "NETUNO", tags: ["Espaço", "Planeta"] },
+  { termo: "LUA", tags: ["Espaço"] },
+  { termo: "SOL", tags: ["Espaço", "Estrela"] },
+  { termo: "ESTRELA", tags: ["Espaço", "Estrela"] },
+  { termo: "COMETA", tags: ["Espaço"] },
+  { termo: "ASTEROIDE", tags: ["Espaço"] },
+  { termo: "OURO", tags: ["Metal"] },
+  { termo: "PRATA", tags: ["Metal"] },
+  { termo: "FERRO", tags: ["Metal"] },
+  { termo: "COBRE", tags: ["Metal"] },
+  { termo: "VIDRO", tags: ["Material"] },
+  { termo: "MADEIRA", tags: ["Material"] },
+  { termo: "PLÁSTICO", tags: ["Material"] },
+  { termo: "PAPEL", tags: ["Material", "Escolar"] },
+  { termo: "ALGODÃO", tags: ["Material", "Tecido"] },
+  { termo: "LÃ", tags: ["Material", "Tecido"] },
+  { termo: "SEDA", tags: ["Material", "Tecido"] },
+  { termo: "MÉDICO", tags: ["Profissão"] },
+  { termo: "PROFESSOR", tags: ["Profissão", "Escolar"] },
+  { termo: "COZINHEIRO", tags: ["Profissão", "Comida"] },
+  { termo: "MOTORISTA", tags: ["Profissão", "Veículo"] },
+  { termo: "BOMBEIRO", tags: ["Profissão"] },
+  { termo: "POLICIAL", tags: ["Profissão"] },
+  { termo: "DENTISTA", tags: ["Profissão", "Corpo"] },
+  { termo: "ARQUITETO", tags: ["Profissão"] },
+  { termo: "ENGENHEIRO", tags: ["Profissão"] },
+  { termo: "JORNALISTA", tags: ["Profissão"] },
+  { termo: "VERDE", tags: ["Cor"] },
+  { termo: "AZUL", tags: ["Cor"] },
+  { termo: "AMARELO", tags: ["Cor", "Cor Laranja"] },
+  { termo: "ROXO", tags: ["Cor"] },
+  { termo: "BRANCO", tags: ["Cor"] },
+  { termo: "PRETO", tags: ["Cor"] },
+  { termo: "CINZA", tags: ["Cor"] },
+  { termo: "ROSA-CHOQUE", tags: ["Cor"] },
+  { termo: "CÍRCULO", tags: ["Forma"] },
+  { termo: "QUADRADO", tags: ["Forma"] },
+  { termo: "TRIÂNGULO", tags: ["Forma"] },
+  { termo: "RETÂNGULO", tags: ["Forma"] },
+  { termo: "CUBO", tags: ["Forma"] },
+  { termo: "ESFERA", tags: ["Forma"] }
 ];
 
 let vidas = VIDAS_INICIAIS;
@@ -150,7 +303,7 @@ function salvarProgresso() {
     }))
   };
   try {
-    localStorage.setItem(CHAVE_SALVAMENTO, JSON.stringify(estado));
+    localStorage.setItem(chaveSalvamentoAtual, JSON.stringify(estado));
     painelSalvamento.textContent = "Progresso salvo neste dispositivo.";
   } catch (erro) {
     painelSalvamento.textContent = "Não foi possível salvar neste navegador.";
@@ -159,7 +312,7 @@ function salvarProgresso() {
 
 function lerSalvamento() {
   try {
-    const bruto = localStorage.getItem(CHAVE_SALVAMENTO);
+    const bruto = localStorage.getItem(chaveSalvamentoAtual);
     if (!bruto) return null;
     const estado = JSON.parse(bruto);
     if (estado.versao !== 1 || !Array.isArray(estado.palavrasDaFase)) return null;
@@ -170,7 +323,7 @@ function lerSalvamento() {
 }
 
 function apagarSalvamento() {
-  try { localStorage.removeItem(CHAVE_SALVAMENTO); } catch (erro) { /* armazenamento indisponível */ }
+  try { localStorage.removeItem(chaveSalvamentoAtual); } catch (erro) { /* armazenamento indisponível */ }
 }
 
 function gerarFase() {
@@ -376,6 +529,19 @@ function registrarAcerto(palavra, zona) {
 function concluirFase() {
   if (faseConcluida || jogoEncerrado) return;
   faseConcluida = true;
+  if (modoDiario) {
+    pontuacao += 50;
+    travarPalavras();
+    atualizarPainel();
+    const registro = { data: dataLocalISO(), pontuacao, regraA, regraB, concluido: true };
+    try { localStorage.setItem(CHAVE_DIARIO, JSON.stringify(registro)); } catch (e) {}
+    mostrarMensagem("Desafio diário concluído! 🏆", `Você completou o desafio de hoje e fez ${pontuacao} pontos. Volte amanhã para um novo desafio!`, [
+      { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
+    ]);
+    painelMensagem.textContent = "Desafio diário concluído. Seu resultado foi salvo neste dispositivo.";
+    salvarProgresso();
+    return;
+  }
   pontuacao += 50;
   travarPalavras();
   atualizarPainel();
@@ -434,6 +600,67 @@ zonas.forEach(zona => {
   zona.addEventListener("click", () => {
     if (termoSelecionado) processarJogada(zona);
   });
+});
+
+function dataLocalISO() {
+  const agora = new Date();
+  return `${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,"0")}-${String(agora.getDate()).padStart(2,"0")}`;
+}
+function geradorComSemente(semente) {
+  let estado = seemente >>> 0;
+  return function() { estado = (estado * 1664525 + 1013904223) >>> 0; return estado / 4294967296; };
+}
+function hashTexto(texto) { let h = 2166136261; for (let i=0;i<texto.length;i++) { h ^= texto.charCodeAt(i); h = Math.imul(h,16777619); } return h >>> 0; }
+function abrirDesafioDiario() {
+  const hoje = dataLocalISO();
+  let registro = null;
+  try { registro = JSON.parse(localStorage.getItem(CHAVE_DIARIO) || "null"); } catch(e) {}
+  if (registro && registro.data === hoje && registro.concluido) {
+    document.getElementById("painel-diario").hidden = false;
+    document.getElementById("painel-diario").innerHTML = `Você já concluiu o desafio de hoje! 🏆<br><strong>Pontuação:</strong> ${registro.pontuacao} pontos. Um novo desafio chega amanhã.`;
+    mostrarMensagem("Desafio diário concluído", `Sua pontuação de hoje foi ${registro.pontuacao}. Volte amanhã para jogar novamente.`, [{texto:"Voltar ao modo clássico",classe:"botao botao-secundario",acao:voltarModoClassico}]);
+    return;
+  }
+  // Mantém uma cópia do progresso clássico antes de mudar para o modo diário.
+  try {
+    const campanha = localStorage.getItem(CHAVE_SALVAMENTO);
+    if (campanha) localStorage.setItem(CHAVE_BACKUP_CAMPANHA, campanha);
+  } catch(e) {}
+  modoDiario = true;
+  chaveSalvamentoAtual = `nexo-diario-partida-${hoje}`;
+  document.getElementById("painel-diario").hidden = false;
+  document.getElementById("painel-diario").innerHTML = `<strong>Desafio Diário · ${hoje}</strong><br>O desafio de hoje é igual para todos os jogadores. Complete as palavras e tente bater seu próprio recorde!`;
+  document.getElementById("botao-modo-diario").classList.add("modo-ativo");
+  document.getElementById("botao-modo-normal").classList.remove("modo-ativo");
+  const originalRandom = Math.random;
+  Math.random = geradorComSemente(hashTexto("NEXO-DIARIO-" + hoje));
+  try {
+    vidas = VIDAS_INICIAIS; nivel = 1; pontuacao = 0; ofensiva = 0;
+    jogoEncerrado = false; faseConcluida = false; recompensaUsada = false;
+    if (!restaurarPartida(lerSalvamento())) iniciarFase();
+  } finally { Math.random = originalRandom; }
+  painelMensagem.textContent = "Desafio diário: as regras e palavras de hoje são fixas.";
+}
+function voltarModoClassico() {
+  if (temporizadorFase) clearTimeout(temporizadorFase);
+  modoDiario = false;
+  chaveSalvamentoAtual = CHAVE_SALVAMENTO;
+  document.getElementById("painel-diario").hidden = true;
+  document.getElementById("botao-modo-diario").classList.remove("modo-ativo");
+  document.getElementById("botao-modo-normal").classList.add("modo-ativo");
+  const backup = (() => { try { return JSON.parse(localStorage.getItem(CHAVE_BACKUP_CAMPANHA) || "null"); } catch(e) { return null; } })();
+  if (backup && restaurarPartida(backup)) {
+    salvarProgresso();
+    painelMensagem.textContent = "Você voltou ao modo clássico. Seu progresso foi preservado.";
+  } else {
+    const salvo = lerSalvamento();
+    if (!salvo || !restaurarPartida(salvo)) iniciarFase();
+  }
+}
+document.getElementById("botao-modo-diario").addEventListener("click", abrirDesafioDiario);
+document.getElementById("botao-modo-normal").addEventListener("click", () => {
+  if (modoDiario) voltarModoClassico();
+  else { document.getElementById("painel-diario").hidden = true; }
 });
 
 function novaPartida() {
