@@ -1,4 +1,4 @@
-const CACHE_NAME = "nexo-pwa-v2";
+const CACHE_NAME = "nexo-pwa-v3";
 const APP_FILES = ["./", "./index.html", "./style.css", "./script.js", "./manifest.json", "./icon.svg"];
 
 self.addEventListener("install", event => {
