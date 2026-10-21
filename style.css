@@ -48,3 +48,10 @@ header p { margin: 10px 0 18px; font-size: 18px; }
 footer { color: #747d8c; font-size: 12px; padding: 12px; }
 @media (max-width: 360px) { body { padding: 10px; } .tabuleiro { transform: scale(.9); transform-origin: top center; margin-bottom: -5px; } .status-item { padding: 8px 12px; min-width: 80px; } .palavra { padding: 10px 14px; } }
 @media (prefers-reduced-motion: no-preference) { .botao, .palavra, .zona-drop { transition: background-color .15s ease, outline-color .15s ease; } }
+
+
+/* Modos de jogo e desafio diário */
+.modos-jogo { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin: 12px auto 20px; }
+.painel-diario { max-width:600px; margin:0 auto 18px; padding:14px 16px; border:1px solid #59677d; border-radius:12px; background:#242c39; color:#f5f6fa; line-height:1.5; }
+.painel-diario strong { color:#70a1ff; }
+.botao.modo-ativo { outline:2px solid #70a1ff; outline-offset:2px; }
