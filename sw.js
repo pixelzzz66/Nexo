@@ -1,4 +1,4 @@
-const CACHE_NAME = "nexo-pwa-v6";
+const CACHE_NAME = "nexo-pwa-v7";
 const APP_FILES = [
   "./",
   "./index.html",
