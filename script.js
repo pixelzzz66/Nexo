@@ -222,6 +222,68 @@ const bancoDePalavras = [
   { termo: "ESFERA", tags: ["Forma"] }
 ];
 
+// Banco exclusivo do Desafio Diário. Estas palavras não entram na campanha clássica.
+const desafiosDiarios = [
+  {
+    regraA: "Funciona com eletricidade",
+    regraB: "Cabe em uma mochila",
+    grupos: {
+      A: [["GELADEIRA MINI", ["Funciona com eletricidade"]], ["LAVADORA", ["Funciona com eletricidade"]]],
+      B: [["CADERNO DE BOLSO", ["Cabe em uma mochila"]], ["GARRAFA", ["Cabe em uma mochila"]]],
+      AB: [["CELULAR DE BOLSO", ["Funciona com eletricidade", "Cabe em uma mochila"]], ["CALCULADORA", ["Funciona com eletricidade", "Cabe em uma mochila"]]],
+      N: [["PEDRA", []], ["COLHER DE MADEIRA", []]]
+    }
+  },
+  {
+    regraA: "É usado na cozinha",
+    regraB: "Pode ser feito de metal",
+    grupos: {
+      A: [["ESPONJA", ["É usado na cozinha"]], ["PANO DE PRATO", ["É usado na cozinha"]]],
+      B: [["MOEDA", ["Pode ser feito de metal"]], ["PARAFUSO", ["Pode ser feito de metal"]]],
+      AB: [["PANELA", ["É usado na cozinha", "Pode ser feito de metal"]], ["GARFO", ["É usado na cozinha", "Pode ser feito de metal"]]],
+      N: [["TRAVESSEIRO", []], ["BOLA DE FUTEBOL", []]]
+    }
+  },
+  {
+    regraA: "É encontrado na natureza",
+    regraB: "É usado para escrever",
+    grupos: {
+      A: [["CACHOEIRA", ["É encontrado na natureza"]], ["MONTANHA", ["É encontrado na natureza"]]],
+      B: [["CANETA ARTESANAL", ["É usado para escrever"]], ["MARCADOR", ["É usado para escrever"]]],
+      AB: [["LÁPIS DE CARVÃO", ["É encontrado na natureza", "É usado para escrever"]], ["GIZ", ["É encontrado na natureza", "É usado para escrever"]]],
+      N: [["MICRO-ONDAS", []], ["CHINELO", []]]
+    }
+  },
+  {
+    regraA: "Tem rodas",
+    regraB: "Transporta pessoas",
+    grupos: {
+      A: [["CARRINHO DE MÃO", ["Tem rodas"]], ["CARRINHO DE SUPERMERCADO", ["Tem rodas"]]],
+      B: [["ELEVADOR", ["Transporta pessoas"]], ["ESCADA ROLANTE", ["Transporta pessoas"]]],
+      AB: [["ÔNIBUS URBANO", ["Tem rodas", "Transporta pessoas"]], ["BICICLETA DE DOIS LUGARES", ["Tem rodas", "Transporta pessoas"]]],
+      N: [["LIVRO", []], ["ABACAXI", []]]
+    }
+  },
+  {
+    regraA: "É um ser vivo",
+    regraB: "Pode voar",
+    grupos: {
+      A: [["ÁRVORE", ["É um ser vivo"]], ["MINHOCA", ["É um ser vivo"]]],
+      B: [["AVIÃO DE PAPEL", ["Pode voar"]], ["PIPA", ["Pode voar"]]],
+      AB: [["ABELHA-DIÁRIO", ["É um ser vivo", "Pode voar"]], ["MORCEGO-DIÁRIO", ["É um ser vivo", "Pode voar"]]],
+      N: [["CADEIRA", []], ["PEDRA-POMES", []]]
+    }
+  }
+];
+
+const palavrasExclusivasDiarias = desafiosDiarios.flatMap(desafio =>
+  Object.values(desafio.grupos).flatMap(grupo =>
+    grupo.map(([termo, tags]) => ({ termo, tags, exclusivaDiario: true }))
+  )
+);
+bancoDePalavras.push(...palavrasExclusivasDiarias);
+
+
 let vidas = VIDAS_INICIAIS;
 let nivel = 1;
 let pontuacao = 0;
@@ -327,7 +389,9 @@ function apagarSalvamento() {
 }
 
 function gerarFase() {
-  const categorias = [...new Set(bancoDePalavras.flatMap(item => item.tags))];
+  if (modoDiario) return gerarFaseDiaria();
+  const bancoClassico = bancoDePalavras.filter(item => !item.exclusivaDiario);
+  const categorias = [...new Set(bancoClassico.flatMap(item => item.tags))];
   const quantidadeDesejada = Math.min(4, 2 + Math.floor((nivel - 1) / 3));
   const paresPossiveis = [];
   for (let i = 0; i < categorias.length; i++) {
@@ -336,10 +400,10 @@ function gerarFase() {
   for (let quantidade = quantidadeDesejada; quantidade >= 1; quantidade--) {
     const paresValidos = [];
     for (const [categoriaA, categoriaB] of paresPossiveis) {
-      const somenteA = bancoDePalavras.filter(item => item.tags.includes(categoriaA) && !item.tags.includes(categoriaB));
-      const somenteB = bancoDePalavras.filter(item => item.tags.includes(categoriaB) && !item.tags.includes(categoriaA));
-      const ambas = bancoDePalavras.filter(item => item.tags.includes(categoriaA) && item.tags.includes(categoriaB));
-      const nenhuma = bancoDePalavras.filter(item => !item.tags.includes(categoriaA) && !item.tags.includes(categoriaB));
+      const somenteA = bancoClassico.filter(item => item.tags.includes(categoriaA) && !item.tags.includes(categoriaB));
+      const somenteB = bancoClassico.filter(item => item.tags.includes(categoriaB) && !item.tags.includes(categoriaA));
+      const ambas = bancoClassico.filter(item => item.tags.includes(categoriaA) && item.tags.includes(categoriaB));
+      const nenhuma = bancoClassico.filter(item => !item.tags.includes(categoriaA) && !item.tags.includes(categoriaB));
       if (somenteA.length >= quantidade && somenteB.length >= quantidade && ambas.length >= quantidade && nenhuma.length >= quantidade) {
         paresValidos.push({ categoriaA, categoriaB, somenteA, somenteB, ambas, nenhuma, quantidade });
       }
@@ -356,6 +420,18 @@ function gerarFase() {
     }
   }
   return null;
+}
+
+
+function gerarFaseDiaria() {
+  const hoje = dataLocalISO();
+  const indice = hashTexto("NEXO-DIARIO-DESAFIOS-" + hoje) % desafiosDiarios.length;
+  const desafio = desafiosDiarios[indice];
+  const palavras = Object.values(desafio.grupos).flatMap(grupo =>
+    grupo.map(([termo]) => bancoDePalavras.find(item => item.termo === termo))
+  ).filter(Boolean);
+  if (palavras.length !== 8) return null;
+  return { regraA: desafio.regraA, regraB: desafio.regraB, palavras: embaralhar(palavras) };
 }
 
 function criarElementoPalavra(item, zonaDestino = "BANCO") {
