@@ -1,5 +1,15 @@
 const CACHE_NAME = "nexo-pwa-v6";
-const APP_FILES = ["./", "./index.html", "./style.css", "./script.js", "./manifest.json", "./icon.svg"];
+const APP_FILES = [
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js",
+  "./manifest.json",
+  "./icon.svg",
+  "./sobre.html",
+  "./privacidade.html",
+  "./termos.html"
+];
 
 self.addEventListener("install", event => {
   event.waitUntil(
