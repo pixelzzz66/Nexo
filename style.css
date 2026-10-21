@@ -123,3 +123,59 @@ footer { color: #747d8c; font-size: 12px; padding: 12px; }
   .chip-palavra { min-width: 28px; height: 28px; font-size: 12px; }
   .status-item { padding: 8px 12px; min-width: 80px; }
 }
+
+/* --- Rodapé com links institucionais --- */
+.rodape-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 8px;
+}
+.rodape-links a {
+  color: #a4b0be;
+  text-decoration: none;
+  font-size: 12px;
+  transition: color .15s ease;
+}
+.rodape-links a:hover { color: var(--azul); }
+
+/* --- Páginas estáticas (sobre, privacidade, termos) --- */
+.pagina-estatica {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px 20px 30px;
+  text-align: left;
+  line-height: 1.7;
+}
+.pagina-estatica .voltar {
+  display: inline-block;
+  margin: 0 0 10px;
+  color: var(--azul);
+  text-decoration: none;
+  font-size: 14px;
+}
+.pagina-estatica .voltar:hover { text-decoration: underline; }
+.pagina-estatica h1 {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 26px;
+  margin: 6px 0 4px;
+}
+.pagina-estatica .atualizado {
+  text-align: center;
+  font-size: 12px;
+  color: #a4b0be;
+  margin-bottom: 24px;
+}
+.pagina-estatica h2 {
+  color: var(--azul);
+  margin-top: 26px;
+  font-size: 18px;
+}
+.pagina-estatica p,
+.pagina-estatica li { color: #dcdde1; }
+.pagina-estatica ul { padding-left: 22px; }
+.pagina-estatica li { margin-bottom: 6px; }
+.pagina-estatica a { color: var(--azul); }
+.pagina-estatica strong { color: #fff; }
