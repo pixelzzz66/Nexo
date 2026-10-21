@@ -13,28 +13,89 @@ header p { margin: 10px 0 18px; font-size: 18px; }
 #regras { font-weight: bold; color: var(--azul); }
 #progresso, .estado-salvamento { font-size: 13px; }
 .estado-salvamento { color: #a4b0be !important; }
+
+/* --- Tabuleiro --- */
 .tabuleiro { position: relative; width: min(320px, 100%); height: 220px; margin: 25px auto 10px; }
-.circulo { width: min(200px, 62vw); height: min(200px, 62vw); max-width: 200px; max-height: 200px; border-radius: 50%; position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; font-weight: bold; mix-blend-mode: screen; }
+.circulo {
+  width: min(200px, 62vw); height: min(200px, 62vw); max-width: 200px; max-height: 200px;
+  border-radius: 50%; position: absolute;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center;
+  gap: 5px; padding: 55px 8px 10px; overflow-y: auto; overflow-x: hidden;
+  font-weight: bold; mix-blend-mode: screen;
+}
 .circulo-a { background: rgba(255,71,87,.7); left: 0; top: 0; z-index: 1; }
 .circulo-b { background: rgba(30,144,255,.7); right: 0; top: 0; z-index: 2; }
 .rotulo-regra { position: absolute; top: 25px; font-size: 12px; opacity: .95; pointer-events: none; max-width: 100px; color: white; }
-.intersecao { width: 90px; height: 180px; left: 50%; top: 10px; transform: translateX(-50%); z-index: 5; background: transparent; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 5px; padding: 28px 4px 8px; overflow-y: auto; overflow-x: hidden; }
+.intersecao {
+  width: 90px; height: 180px; left: 50%; top: 10px; transform: translateX(-50%); z-index: 5;
+  background: transparent; border-radius: 50%;
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; align-content: flex-start;
+  gap: 4px; padding: 20px 4px 8px; overflow-y: auto; overflow-x: hidden;
+}
 .intersecao.hover-ativo { background: rgba(255,255,255,.2); transform: translateX(-50%) scale(1.03); }
-.circulo .palavra { flex: 0 0 auto; width: 100%; max-width: 100%; padding: 5px 2px; margin: 0 auto; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid rgba(255,255,255,.2); border-radius: 6px; box-shadow: none; white-space: normal; overflow-wrap: anywhere; mix-blend-mode: normal; }
+
+/* --- Chip numérico nas zonas --- */
+.chip-palavra {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 32px; height: 32px; padding: 0 6px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.95); color: #1a1a1a;
+  font-size: 13px; font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0,0,0,.35);
+  pointer-events: none;
+}
+
+/* --- Banco de palavras --- */
 .area-banco { max-width: 700px; margin: 30px auto; }
 .area-banco h3 { margin-bottom: 8px; }
 .dica-toque { font-size: 12px; color: #a4b0be; margin: 0 0 15px; }
-.banco-palavras { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; min-height: 65px; }
-.palavra { background: var(--painel); color: white; padding: 12px 20px; border: 1px solid transparent; border-radius: 8px; font-size: 14px; font-weight: bold; text-align: center; cursor: grab; user-select: none; touch-action: manipulation; box-shadow: 0 4px 6px rgba(0,0,0,.3); }
+.banco-palavras { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; min-height: 65px; }
+.palavra {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--painel); color: white;
+  padding: 10px 14px 10px 10px;
+  border: 1px solid transparent; border-radius: 8px;
+  font-size: 14px; font-weight: bold; text-align: left;
+  cursor: grab; user-select: none; touch-action: manipulation;
+  box-shadow: 0 4px 6px rgba(0,0,0,.3);
+  transition: background-color .15s, opacity .15s, transform .1s;
+}
 .palavra:focus-visible, .botao:focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
 .palavra:active { cursor: grabbing; }
-.palavra.acertada { background: var(--verde) !important; color: #1a1a1a !important; cursor: default; }
-.palavra.selecionada { outline: 3px solid #ffa502; outline-offset: 2px; }
-.zona-nenhuma { position: relative; width: min(320px, 100%); min-height: 85px; margin: 10px auto 25px; padding: 12px; background: #262b35; border: 2px dashed var(--borda); border-radius: 12px; display: flex; flex-wrap: wrap; align-content: flex-start; align-items: center; justify-content: center; gap: 5px; color: #dfe4ea; font-size: 13px; font-weight: bold; }
+.palavra .numero-palavra {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px; padding: 0 4px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.15); color: #fff;
+  font-size: 12px; font-weight: 700;
+}
+.palavra .texto-palavra { line-height: 1.2; }
+.palavra.selecionada { outline: 3px solid #ffa502; outline-offset: 2px; background: #3b4252; }
+.palavra.colocada {
+  background: rgba(46, 213, 115, 0.18);
+  border-color: rgba(46, 213, 115, 0.6);
+  color: #b6ffd0;
+  cursor: default;
+  padding: 6px 10px;
+  font-size: 12px;
+  opacity: .85;
+  box-shadow: none;
+}
+.palavra.colocada .numero-palavra { background: rgba(46,213,115,.35); color: #071a0e; }
+.check-palavra { color: var(--verde); font-weight: 700; margin-left: 4px; }
+
+/* --- Zona "nenhuma" --- */
+.zona-nenhuma {
+  position: relative; width: min(320px, 100%); min-height: 85px; margin: 10px auto 25px; padding: 12px;
+  background: #262b35; border: 2px dashed var(--borda); border-radius: 12px;
+  display: flex; flex-wrap: wrap; align-content: flex-start; align-items: center; justify-content: center;
+  gap: 6px; color: #dfe4ea; font-size: 13px; font-weight: bold;
+}
 .rotulo-nenhuma { flex-basis: 100%; }
 .zona-nenhuma.hover-ativo { background: #343c4a; border-color: var(--azul); }
-.zona-nenhuma .palavra { flex: 0 0 auto; max-width: 100%; padding: 6px 8px; font-size: 11px; overflow-wrap: anywhere; mix-blend-mode: normal; }
-.zona-drop.destino-selecionado { outline: 3px solid #ffa502; outline-offset: 3px; }
+.zona-nenhuma .chip-palavra { background: #e8f0ff; }
+
+/* --- Mensagens e botões --- */
 .mensagem-final { max-width: 500px; margin: 25px auto; padding: 20px; background: var(--painel); border: 1px solid #485160; border-radius: 12px; }
 .mensagem-final h2 { margin-top: 0; }
 .mensagem-final p { line-height: 1.6; }
@@ -46,45 +107,19 @@ header p { margin: 10px 0 18px; font-size: 18px; }
 .botao-secundario { color: white; background: #485160; }
 .acoes-secundarias { margin: 22px auto; }
 footer { color: #747d8c; font-size: 12px; padding: 12px; }
-@media (max-width: 360px) { body { padding: 10px; } .tabuleiro { transform: scale(.9); transform-origin: top center; margin-bottom: -5px; } .status-item { padding: 8px 12px; min-width: 80px; } .palavra { padding: 10px 14px; } }
-@media (prefers-reduced-motion: no-preference) { .botao, .palavra, .zona-drop { transition: background-color .15s ease, outline-color .15s ease; } }
 
+/* --- Modos --- */
+.modos-jogo { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 12px auto 20px; }
+.painel-diario { max-width: 600px; margin: 0 auto 18px; padding: 14px 16px; border: 1px solid #59677d; border-radius: 12px; background: #242c39; color: #f5f6fa; line-height: 1.5; }
+.painel-diario strong { color: #70a1ff; }
+.botao.modo-ativo { outline: 2px solid #70a1ff; outline-offset: 2px; }
 
-/* Modos de jogo e desafio diário */
-.modos-jogo { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin: 12px auto 20px; }
-.painel-diario { max-width:600px; margin:0 auto 18px; padding:14px 16px; border:1px solid #59677d; border-radius:12px; background:#242c39; color:#f5f6fa; line-height:1.5; }
-.painel-diario strong { color:#70a1ff; }
-.botao.modo-ativo { outline:2px solid #70a1ff; outline-offset:2px; }
-
-/* Transforma a palavra alocada em um ícone circular */
-.palavra-alocada {
-    width: 30px !important;
-    height: 30px !important;
-    padding: 0 !important;
-    border-radius: 50% !important;
-    font-size: 0 !important; /* Esconde o texto da palavra */
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background-color: #2ed573 !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-/* Adiciona o símbolo de check (ou estrela/número) */
-.palavra-alocada::after {
-    content: "✔️"; 
-    font-size: 14px;
-}
-
-/* Ajuste para alinhar os símbolos lado a lado nos círculos */
-.circulo {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-}
-.intersecao {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
+/* --- Responsivo --- */
+@media (max-width: 500px) {
+  body { padding: 10px; }
+  .palavra { padding: 8px 10px 8px 8px; font-size: 12px; gap: 6px; }
+  .palavra .numero-palavra { min-width: 20px; height: 20px; font-size: 11px; }
+  .palavra.colocada { font-size: 11px; padding: 5px 8px; }
+  .chip-palavra { min-width: 28px; height: 28px; font-size: 12px; }
+  .status-item { padding: 8px 12px; min-width: 80px; }
 }
