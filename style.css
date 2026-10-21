@@ -55,3 +55,36 @@ footer { color: #747d8c; font-size: 12px; padding: 12px; }
 .painel-diario { max-width:600px; margin:0 auto 18px; padding:14px 16px; border:1px solid #59677d; border-radius:12px; background:#242c39; color:#f5f6fa; line-height:1.5; }
 .painel-diario strong { color:#70a1ff; }
 .botao.modo-ativo { outline:2px solid #70a1ff; outline-offset:2px; }
+
+/* Transforma a palavra alocada em um ícone circular */
+.palavra-alocada {
+    width: 30px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    font-size: 0 !important; /* Esconde o texto da palavra */
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    background-color: #2ed573 !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Adiciona o símbolo de check (ou estrela/número) */
+.palavra-alocada::after {
+    content: "✔️"; 
+    font-size: 14px;
+}
+
+/* Ajuste para alinhar os símbolos lado a lado nos círculos */
+.circulo {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.intersecao {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
