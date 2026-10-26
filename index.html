@@ -105,6 +105,19 @@
 
   <!-- Toast de feedback -->
   <div id="toast" class="toast" hidden aria-live="polite"></div>
+    <!-- Preview de compartilhamento -->
+  <div id="share-preview" class="share-overlay" hidden>
+    <div class="share-modal">
+      <button class="share-close" id="share-close" type="button" aria-label="Fechar">✕</button>
+      <h2>Compartilhe seu resultado</h2>
+      <p class="share-sub">É isso que será enviado:</p>
+      <pre id="share-text-preview" class="share-text-preview"></pre>
+      <div class="share-actions">
+        <button id="share-copy" class="botao" type="button">📋 Copiar texto</button>
+        <button id="share-native" class="botao botao-share" type="button" hidden>📱 Compartilhar via…</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Onboarding -->
   <div id="onboarding" class="onboarding-overlay" hidden>
