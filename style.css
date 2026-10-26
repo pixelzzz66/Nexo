@@ -179,3 +179,53 @@ footer { color: #747d8c; font-size: 12px; padding: 12px; }
 .pagina-estatica li { margin-bottom: 6px; }
 .pagina-estatica a { color: var(--azul); }
 .pagina-estatica strong { color: #fff; }
+
+/* --- Botão de dica --- */
+.botao-dica {
+  display: inline-block;
+  margin: 6px auto 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  background: #ffa502;
+  color: #1a1a1a;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.botao-dica:hover:not(:disabled) { filter: brightness(1.08); }
+.botao-dica:disabled {
+  background: #485160;
+  color: #a4b0be;
+  cursor: not-allowed;
+  opacity: .7;
+}
+
+/* --- Destaque da dica --- */
+.zona-drop.dica-destacada {
+  box-shadow: 0 0 0 4px #ffa502, 0 0 20px rgba(255, 165, 2, .5);
+  animation: pulso-dica 0.6s ease-in-out 2;
+}
+.palavra.dica-palavra {
+  outline: 3px solid #ffa502;
+  outline-offset: 2px;
+  animation: pulso-dica 0.6s ease-in-out 2;
+}
+@keyframes pulso-dica {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+
+/* --- Contador do desafio diário --- */
+.contador-diario {
+  display: block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 165, 2, .12);
+  border: 1px solid rgba(255, 165, 2, .4);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffa502;
+  font-variant-numeric: tabular-nums;
+}
