@@ -308,3 +308,136 @@ footer { color: #747d8c; font-size: 12px; padding: 12px; }
 @media (max-width: 380px) {
   .tabuleiro-hardcore { transform: scale(.9); transform-origin: top center; margin-bottom: -15px; }
 }
+
+/* --- Botão hardcore --- */
+.botao-hardcore {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+}
+.botao-hardcore.modo-ativo {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 2px;
+}
+
+/* --- Seção da palavra central --- */
+.secao-central {
+  max-width: 500px;
+  margin: 18px auto;
+  padding: 16px;
+  background: rgba(255, 165, 2, .10);
+  border: 1px solid rgba(255, 165, 2, .4);
+  border-radius: 12px;
+  text-align: left;
+}
+.secao-central[hidden] { display: none; }
+.secao-central label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ffa502;
+  font-size: 14px;
+}
+.input-central-wrap { display: flex; gap: 8px; }
+#input-central {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #485160;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #f5f6fa;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 0;
+}
+#input-central:focus { outline: none; border-color: #ffa502; }
+#input-central.acerto {
+  border-color: var(--verde);
+  background: rgba(46, 213, 115, .15);
+  color: #b6ffd0;
+  cursor: default;
+}
+#input-central.erro { border-color: #ff4757; animation: shake .3s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+#feedback-central {
+  margin-top: 10px;
+  font-size: 13px;
+  min-height: 18px;
+  line-height: 1.4;
+}
+#feedback-central.ok { color: var(--verde); }
+#feedback-central.err { color: #ff4757; }
+
+/* --- Tabuleiro 3 círculos --- */
+.tabuleiro-hardcore {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  margin: 20px auto 10px;
+}
+.tabuleiro-hardcore[hidden] { display: none; }
+.venn3 { position: relative; width: 100%; height: 100%; }
+.venn-circulo {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+}
+.venn-a { background: rgba(255, 71, 87, .65); left: 15px; top: 30px; }
+.venn-b { background: rgba(30, 144, 255, .65); left: 145px; top: 30px; }
+.venn-c { background: rgba(46, 213, 115, .60); left: 80px; top: 140px; }
+
+.venn-zona {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .10);
+  border: 2px dashed rgba(255, 255, 255, .4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+  z-index: 10;
+}
+.venn-zona.hover-ativo {
+  background: rgba(255, 255, 255, .30);
+  transform: scale(1.1);
+}
+.venn-zona.zona-central {
+  background: rgba(255, 165, 2, .20);
+  border: 2px solid rgba(255, 165, 2, .7);
+  width: 52px;
+  height: 52px;
+  margin-left: -26px;
+  margin-top: -26px;
+  box-shadow: 0 0 10px rgba(255, 165, 2, .4);
+}
+.venn-zona .chip-palavra {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  font-size: 11px;
+  border-radius: 9px;
+}
+
+/* Destaque hardcore (dica) */
+.venn-zona.dica-destacada {
+  box-shadow: 0 0 0 4px #ffa502, 0 0 20px rgba(255, 165, 2, .6);
+  animation: pulso-dica 0.6s ease-in-out 2;
+}
+
+@media (max-width: 380px) {
+  .tabuleiro-hardcore { transform: scale(.9); transform-origin: top center; margin-bottom: -15px; }
+}
