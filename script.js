@@ -1616,24 +1616,46 @@ function montarTextoCompartilhavel() {
   return linhas.join("\n");
 }
 
-async function compartilharResultado() {
+function compartilharResultado() {
   const texto = montarTextoCompartilhavel();
-  if (navigator.share) {
-    try {
-      await navigator.share({ text: texto });
-      return;
-    } catch (e) {
-      if (e && e.name === "AbortError") return;
-    }
-  }
+  const modal = document.getElementById("share-preview");
+  const preview = document.getElementById("share-text-preview");
+  const btnNative = document.getElementById("share-native");
+
+  preview.textContent = texto;
+  btnNative.hidden = !navigator.share;
+  modal.hidden = false;
+}
+
+function fecharPreviewCompartilhar() {
+  const modal = document.getElementById("share-preview");
+  if (modal) modal.hidden = true;
+}
+
+async function copiarTextoCompartilhado() {
+  const preview = document.getElementById("share-text-preview");
+  if (!preview) return;
+  const texto = preview.textContent;
   try {
     await navigator.clipboard.writeText(texto);
-    mostrarToast("✅ Resultado copiado! Cole no WhatsApp, Twitter ou onde quiser.", "ok");
+    mostrarToast("✅ Resultado copiado!", "ok");
+    fecharPreviewCompartilhar();
   } catch (e) {
     mostrarToast("Não foi possível copiar automaticamente.", "err");
   }
 }
 
+async function compartilharNativo() {
+  const preview = document.getElementById("share-text-preview");
+  if (!preview || !navigator.share) return;
+  try {
+    await navigator.share({ text: preview.textContent });
+    fecharPreviewCompartilhar();
+  } catch (e) {
+    if (e && e.name === "AbortError") return;
+    mostrarToast("Não foi possível compartilhar.", "err");
+  }
+}
 /* =========================================
    TOAST
    ========================================= */
@@ -1696,6 +1718,9 @@ document.getElementById("onboarding-prev").addEventListener("click", () => {
   }
 });
 document.getElementById("onboarding-skip").addEventListener("click", fecharOnboarding);
+document.getElementById("share-close").addEventListener("click", fecharPreviewCompartilhar);
+document.getElementById("share-copy").addEventListener("click", copiarTextoCompartilhado);
+document.getElementById("share-native").addEventListener("click", compartilharNativo);
 
 /* ---------- SERVICE WORKER ---------- */
 if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
