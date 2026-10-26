@@ -133,7 +133,7 @@ const bancoDePalavras = [
   { termo: "CHUMBO", tags: ["Cinza", "Metal", "É duro"] },
   { termo: "POMBO", tags: ["Cinza", "Animal", "Doméstico", "Voa", "Tem asas", "Tem penas", "Põe ovos", "Faz barulho"] },
 
-  // ============ FRUTAS E COMIDAS (resto) ============
+  // ============ FRUTAS E COMIDAS ============
   { termo: "MAÇÃ", tags: ["Vermelho", "Verde", "Comida", "Fruta", "Doce", "Redondo", "É dura"] },
   { termo: "LIMÃO", tags: ["Verde", "Amarelo", "Comida", "Fruta", "Azedo", "Cítrico", "Redondo"] },
   { termo: "KIWI", tags: ["Verde", "Marrom", "Comida", "Fruta", "Azedo", "Doce", "É macio"] },
@@ -197,7 +197,7 @@ const bancoDePalavras = [
   { termo: "CADEIRA DE ESCRITÓRIO", tags: ["Tem rodas", "Doméstico", "É dura"] },
   { termo: "RODA", tags: ["Redondo", "Tem rodas", "É duro"] },
 
-  // ============ ANIMAIS — MAMÍFEROS ============
+  // ============ ANIMAIS - MAMÍFEROS ============
   { termo: "CACHORRO", tags: ["Animal", "Doméstico", "Tem pelo", "Tem cauda", "Faz barulho"] },
   { termo: "GATO", tags: ["Animal", "Doméstico", "Tem pelo", "Tem cauda", "Faz barulho", "É noturno"] },
   { termo: "LEÃO", tags: ["Animal", "Selvagem", "Tem pelo", "Tem cauda", "Faz barulho"] },
@@ -217,7 +217,7 @@ const bancoDePalavras = [
   { termo: "LHAMA", tags: ["Animal", "Doméstico", "Tem pelo"] },
   { termo: "CAPIVARA", tags: ["Animal", "Selvagem", "Tem pelo", "Vive na água"] },
 
-  // ============ ANIMAIS — AVES ============
+  // ============ ANIMAIS - AVES ============
   { termo: "GALINHA", tags: ["Animal", "Doméstico", "Tem asas", "Tem penas", "Põe ovos", "Faz barulho"] },
   { termo: "PATO", tags: ["Animal", "Doméstico", "Voa", "Tem asas", "Tem penas", "Põe ovos", "Vive na água", "Faz barulho"] },
   { termo: "ÁGUIA", tags: ["Animal", "Selvagem", "Voa", "Tem asas", "Tem penas", "Põe ovos"] },
@@ -231,7 +231,7 @@ const bancoDePalavras = [
   { termo: "ARARA", tags: ["Animal", "Selvagem", "Voa", "Tem asas", "Tem penas", "Põe ovos", "Faz barulho"] },
   { termo: "BEIJA-FLOR", tags: ["Animal", "Selvagem", "Voa", "Tem asas", "Tem penas", "Põe ovos"] },
 
-  // ============ ANIMAIS — RÉPTEIS, PEIXES, INSETOS ============
+  // ============ ANIMAIS - RÉPTEIS, PEIXES, INSETOS ============
   { termo: "COBRA", tags: ["Animal", "Selvagem", "Tem escamas", "Põe ovos"] },
   { termo: "JACARÉ", tags: ["Animal", "Selvagem", "Vive na água", "Tem escamas", "Põe ovos", "Tem cauda"] },
   { termo: "CROCODILO", tags: ["Animal", "Selvagem", "Vive na água", "Tem escamas", "Põe ovos"] },
@@ -255,7 +255,7 @@ const bancoDePalavras = [
   { termo: "JOANINHA", tags: ["Animal", "Inseto", "Voa", "Põe ovos", "Redondo"] },
   { termo: "CIGARRA", tags: ["Animal", "Inseto", "Voa", "Faz barulho"] },
 
-  // ============ DOMÉSTICO / OBJETOS ============
+  // ============ DOMÉSTICO ============
   { termo: "MESA", tags: ["Doméstico", "É dura", "Marrom"] },
   { termo: "SOFÁ", tags: ["Doméstico", "É macio"] },
   { termo: "CAMA", tags: ["Doméstico", "É macia"] },
@@ -354,7 +354,7 @@ const bancoDePalavras = [
   { termo: "PEDRA", tags: ["É dura", "Cinza"] },
   { termo: "ROCHA", tags: ["É dura", "Cinza"] },
 
-  // ============ PLANTAS (fora das cores) ============
+  // ============ PLANTAS ============
   { termo: "MARGARIDA", tags: ["Planta", "Branco", "É macia"] },
   { termo: "TULIPA", tags: ["Planta"] },
   { termo: "ORQUÍDEA", tags: ["Planta"] },
@@ -402,7 +402,7 @@ const bancoDePalavras = [
   { termo: "JORNALISTA", tags: ["Profissão"] },
   { termo: "PILOTO", tags: ["Profissão", "Veículo"] },
 
-  // ============ ESPORTES E JOGOS ============
+  // ============ ESPORTES ============
   { termo: "FUTEBOL", tags: ["Esporte", "Redondo"] },
   { termo: "BASQUETE", tags: ["Esporte", "Redondo"] },
   { termo: "VÔLEI", tags: ["Esporte", "Redondo"] },
@@ -439,6 +439,9 @@ let termoSelecionado = "";
 let palavrasRestantes = 0;
 let palavrasDaFase = [];
 let temporizadorFase = null;
+let dicasUsadas = 0;
+const DICAS_POR_FASE = 1;
+let contadorDiarioInterval = null;
 
 const bancoHTML = document.getElementById("banco");
 const painelVidas = document.getElementById("vidas");
@@ -490,6 +493,17 @@ function atualizarPainel() {
   painelPontuacao.textContent = pontuacao;
   painelOfensiva.textContent = `${ofensiva} 🔥`;
   painelProgresso.textContent = `Palavras restantes: ${palavrasRestantes}`;
+
+  const botaoDica = document.getElementById("botao-dica");
+  if (botaoDica) {
+    const podeUsar = !jogoEncerrado && !faseConcluida && dicasUsadas < DICAS_POR_FASE && palavrasRestantes > 0;
+    botaoDica.disabled = !podeUsar;
+    if (dicasUsadas >= DICAS_POR_FASE) {
+      botaoDica.textContent = "💡 Dica já usada nesta fase";
+    } else {
+      botaoDica.textContent = "💡 Dica (-5 pts)";
+    }
+  }
 }
 
 function mostrarMensagem(titulo, texto, botoes = []) {
@@ -526,6 +540,7 @@ function salvarProgresso() {
     versao: 1,
     vidas, nivel, pontuacao, ofensiva,
     jogoEncerrado, faseConcluida, recompensaUsada,
+    dicasUsadas,
     regraA, regraB, palavrasRestantes,
     palavrasDaFase: palavrasDaFase.map(item => item.termo),
     regioes
@@ -595,7 +610,7 @@ function gerarFaseDiaria() {
   const originalRandom = Math.random;
   const originalNivel = nivel;
   Math.random = geradorComSemente(hashTexto("NEXO-DIARIO-" + hoje));
-  nivel = 1; // diário sempre com 8 palavras (2 por região)
+  nivel = 1;
   try {
     return gerarFaseClassica();
   } finally {
@@ -704,6 +719,7 @@ function iniciarFase() {
   elementoArrastado = null;
   termoSelecionado = "";
   recompensaUsada = false;
+  dicasUsadas = 0;
   esconderMensagem();
 
   const fase = gerarFase();
@@ -868,6 +884,100 @@ function processarJogada(zona) {
   document.querySelectorAll(".palavra.selecionada").forEach(el => el.classList.remove("selecionada"));
 }
 
+/* ---------- SISTEMA DE DICAS ---------- */
+function determinarRegiao(item) {
+  const a = item.tags.includes(regraA);
+  const b = item.tags.includes(regraB);
+  if (a && b) return "AB";
+  if (a) return "A";
+  if (b) return "B";
+  return "N";
+}
+
+function mostrarDica() {
+  if (jogoEncerrado || faseConcluida) return;
+  if (dicasUsadas >= DICAS_POR_FASE) {
+    painelMensagem.textContent = "Você já usou a dica desta fase. Ela renova na próxima.";
+    return;
+  }
+
+  const naoColocadas = palavrasDaFase.filter(item => {
+    const el = [...bancoHTML.querySelectorAll(".palavra")].find(p => p.dataset.termo === item.termo);
+    return el && !el.classList.contains("colocada");
+  });
+
+  if (naoColocadas.length === 0) {
+    painelMensagem.textContent = "Todas as palavras já foram colocadas. Use a dica na próxima fase.";
+    return;
+  }
+
+  const escolhida = naoColocadas[Math.floor(Math.random() * naoColocadas.length)];
+  const regiaoCorreta = determinarRegiao(escolhida);
+  const elPalavra = [...bancoHTML.querySelectorAll(".palavra")].find(p => p.dataset.termo === escolhida.termo);
+  const numero = elPalavra?.dataset.numero || "?";
+
+  const nomesRegiao = {
+    A: `apenas "${regraA}"`,
+    B: `apenas "${regraB}"`,
+    AB: `interseção (ambas as regras)`,
+    N: `nenhuma das regras`
+  };
+
+  dicasUsadas++;
+  pontuacao = Math.max(0, pontuacao - 5);
+  atualizarPainel();
+
+  painelMensagem.textContent =
+    `💡 Dica: a palavra nº ${numero} ("${escolhida.termo}") vai em: ${nomesRegiao[regiaoCorreta]}. (-5 pts)`;
+
+  const zona = document.querySelector(`.zona-drop[data-zona="${regiaoCorreta}"]`);
+  if (zona) {
+    zona.classList.add("dica-destacada");
+    setTimeout(() => zona.classList.remove("dica-destacada"), 2500);
+  }
+
+  if (elPalavra) {
+    elPalavra.classList.add("dica-palavra");
+    setTimeout(() => elPalavra.classList.remove("dica-palavra"), 2500);
+  }
+
+  salvarProgresso();
+}
+
+/* ---------- CONTADOR DO DESAFIO DIÁRIO ---------- */
+function tempoParaProximaMeiaNoite() {
+  const agora = new Date();
+  const proxima = new Date(agora);
+  proxima.setHours(24, 0, 0, 0);
+  return Math.max(0, proxima - agora);
+}
+
+function formatarTempoContagem(ms) {
+  const totalSeg = Math.floor(ms / 1000);
+  const h = Math.floor(totalSeg / 3600);
+  const m = Math.floor((totalSeg % 3600) / 60);
+  const s = totalSeg % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function iniciarContadorDiario() {
+  pararContadorDiario();
+  const el = document.getElementById("contador-diario");
+  if (!el) return;
+  const atualizar = () => {
+    el.textContent = `⏳ Próximo desafio em: ${formatarTempoContagem(tempoParaProximaMeiaNoite())}`;
+  };
+  atualizar();
+  contadorDiarioInterval = setInterval(atualizar, 1000);
+}
+
+function pararContadorDiario() {
+  if (contadorDiarioInterval) {
+    clearInterval(contadorDiarioInterval);
+    contadorDiarioInterval = null;
+  }
+}
+
 /* ---------- EVENTOS DAS ZONAS ---------- */
 zonas.forEach(zona => {
   const zonaAlvo = zona.dataset.zona;
@@ -908,7 +1018,10 @@ function abrirDesafioDiario() {
   if (registro && registro.data === hoje && registro.concluido) {
     document.getElementById("painel-diario").hidden = false;
     document.getElementById("painel-diario").innerHTML =
-      `Você já concluiu o desafio de hoje! 🏆<br><strong>Pontuação:</strong> ${registro.pontuacao} pontos. Um novo desafio chega amanhã.`;
+      `Você já concluiu o desafio de hoje! 🏆<br>
+       <strong>Pontuação:</strong> ${registro.pontuacao} pontos.
+       <div id="contador-diario" class="contador-diario"></div>`;
+    iniciarContadorDiario();
     mostrarMensagem("Desafio diário concluído", `Sua pontuação de hoje foi ${registro.pontuacao}. Volte amanhã para jogar novamente.`, [
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
@@ -925,7 +1038,9 @@ function abrirDesafioDiario() {
   document.getElementById("painel-diario").hidden = false;
   document.getElementById("painel-diario").innerHTML =
     `<strong>Desafio Diário · ${hoje}</strong><br>
-     Um novo conjunto de regras é gerado automaticamente todo dia — igual para todos os jogadores. Volte amanhã!`;
+     Um novo conjunto de regras é gerado automaticamente todo dia — igual para todos os jogadores. Volte amanhã!
+     <div id="contador-diario" class="contador-diario"></div>`;
+  iniciarContadorDiario();
   document.getElementById("botao-modo-diario").classList.add("modo-ativo");
   document.getElementById("botao-modo-normal").classList.remove("modo-ativo");
 
@@ -945,6 +1060,7 @@ function abrirDesafioDiario() {
 function voltarModoClassico() {
   if (temporizadorFase) clearTimeout(temporizadorFase);
   temporizadorFase = null;
+  pararContadorDiario();
   modoDiario = false;
   chaveSalvamentoAtual = CHAVE_SALVAMENTO;
   document.getElementById("painel-diario").hidden = true;
@@ -977,6 +1093,7 @@ function novaPartida() {
   jogoEncerrado = false;
   faseConcluida = false;
   recompensaUsada = false;
+  dicasUsadas = 0;
   apagarSalvamento();
   iniciarFase();
 }
@@ -990,6 +1107,8 @@ document.getElementById("botao-nova-partida").addEventListener("click", () => {
     ]);
   } else novaPartida();
 });
+
+document.getElementById("botao-dica").addEventListener("click", mostrarDica);
 
 /* ---------- RESTAURAÇÃO ---------- */
 function restaurarPartida(estado) {
@@ -1011,6 +1130,7 @@ function restaurarPartida(estado) {
   jogoEncerrado = Boolean(estado.jogoEncerrado);
   faseConcluida = Boolean(estado.faseConcluida);
   recompensaUsada = Boolean(estado.recompensaUsada);
+  dicasUsadas = Math.max(0, Number(estado.dicasUsadas) || 0);
 
   document.querySelector(".circulo-a .rotulo-regra").textContent = `A: ${regraA}`;
   document.querySelector(".circulo-b .rotulo-regra").textContent = `B: ${regraB}`;
