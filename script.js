@@ -9,10 +9,12 @@ let modoHardcore = false;
 const CHAVE_DIARIO = "nexo-diario-v1";
 const CHAVE_HARDCORE = "nexo-hardcore-v1";
 const CHAVE_BACKUP_CAMPANHA = "nexo-campanha-backup-v1";
+const CHAVE_STREAK = "nexo-streak-v1";
+const CHAVE_ONBOARDING = "nexo-onboarding-v1";
 const VIDAS_INICIAIS = 3;
 const VIDAS_RECOMPENSA = 3;
 
-/* ---------- CATÁLOGO CLÁSSICO (idêntico) ---------- */
+/* ---------- CATÁLOGO CLÁSSICO ---------- */
 const bancoDePalavras = [
   { termo: "TOMATE", tags: ["Vermelho", "Comida", "Vegetal", "Redondo"] },
   { termo: "MORANGO", tags: ["Vermelho", "Comida", "Fruta", "Doce", "Azedo"] },
@@ -371,7 +373,7 @@ const bancoDePalavras = [
   { termo: "ESFERA", tags: ["Forma", "Redondo"] }
 ];
 
-/* ---------- DESAFIOS HARDCORE (10 puzzles curados) ---------- */
+/* ---------- DESAFIOS HARDCORE ---------- */
 const desafiosHardcore = [
   {
     regraA: "Animal", regraB: "Voa", regraC: "Vive na água",
@@ -578,6 +580,8 @@ let contadorDiarioInterval = null;
 let contadorSemanalInterval = null;
 let palavraCentralDescoberta = false;
 let puzzleHardcoreAtual = null;
+let errosPorTermo = {};
+let palavraDaDica = null;
 
 const bancoHTML = document.getElementById("banco");
 const painelVidas = document.getElementById("vidas");
@@ -709,6 +713,8 @@ function salvarProgresso() {
     jogoEncerrado, faseConcluida, recompensaUsada,
     dicasUsadas,
     palavraCentralDescoberta,
+    errosPorTermo,
+    palavraDaDica,
     regraA, regraB, regraC,
     palavrasRestantes,
     palavrasDaFase: palavrasDaFase.map(item => item.termo),
@@ -736,7 +742,7 @@ function apagarSalvamento() {
   try { localStorage.removeItem(chaveSalvamentoAtual); } catch (e) {}
 }
 
-/* ---------- GERAÇÃO CLÁSSICO/DIÁRIO ---------- */
+/* ---------- GERAÇÃO DE FASES ---------- */
 function gerarFaseClassica() {
   const categorias = [...new Set(bancoDePalavras.flatMap(item => item.tags))];
   const quantidadeDesejada = Math.min(4, 2 + Math.floor((nivel - 1) / 3));
@@ -874,7 +880,6 @@ function renderizarPalavras(regioes = {}) {
     : null;
 
   palavrasDaFase.forEach((item, index) => {
-    // Central não entra no banco (é digitada)
     if (modoHardcore && item === central) return;
     const numero = index + 1;
     const regiao = regioes[item.termo] || "BANCO";
@@ -888,7 +893,6 @@ function renderizarPalavras(regioes = {}) {
     }
   });
 
-  // Se a central foi descoberta, mostra o chip no centro
   if (modoHardcore && palavraCentralDescoberta && central) {
     const index = palavrasDaFase.findIndex(p => p.termo === central.termo);
     const dest = document.querySelector('[data-zona="ABC"]');
@@ -907,6 +911,8 @@ function iniciarFase() {
   recompensaUsada = false;
   dicasUsadas = 0;
   palavraCentralDescoberta = false;
+  errosPorTermo = {};
+  palavraDaDica = null;
   esconderMensagem();
   inputCentral.value = "";
   inputCentral.classList.remove("acerto", "erro");
@@ -924,8 +930,7 @@ function iniciarFase() {
   palavrasDaFase = fase.palavras;
 
   if (modoHardcore) {
-    palavrasRestantes = palavrasDaFase.length - 1; // exclui a central
-    document.querySelector(".rotulo-regra").textContent = "";
+    palavrasRestantes = palavrasDaFase.length - 1;
     const rotA = document.querySelector(".circulo-a .rotulo-regra");
     const rotB = document.querySelector(".circulo-b .rotulo-regra");
     if (rotA) rotA.textContent = "";
@@ -980,6 +985,7 @@ function encerrarJogo() {
   atualizarPainel();
   painelMensagem.textContent = "Suas vidas acabaram.";
   const botoes = [
+    { texto: "📋 Compartilhar", classe: "botao botao-share", acao: compartilharResultado },
     { texto: "Testar recompensa (+3 vidas)", classe: "botao", acao: simularAnuncioRecompensado, desabilitado: recompensaUsada },
     { texto: "Começar nova partida", classe: "botao botao-secundario", acao: novaPartida }
   ];
@@ -1008,6 +1014,8 @@ function simularAnuncioRecompensado() {
 
 function registrarErro(palavra) {
   palavra.style.backgroundColor = "#ff4757";
+  const t = palavra.dataset.termo;
+  if (t) errosPorTermo[t] = (errosPorTermo[t] || 0) + 1;
   vidas = Math.max(0, vidas - 1);
   ofensiva = 0;
   atualizarPainel();
@@ -1067,7 +1075,8 @@ function concluirFase() {
     atualizarPainel();
     const registro = { semana: identificadorSemana(), pontuacao, regraA, regraB, regraC, concluido: true };
     try { localStorage.setItem(CHAVE_HARDCORE, JSON.stringify(registro)); } catch (e) {}
-    mostrarMensagem("HARDCORE CONCLUÍDO! 🏆🔥", `Incrível! Você resolveu o hardcore da semana e fez ${pontuacao} pontos. Volte segunda-feira para um novo desafio.`, [
+    mostrarMensagem("HARDCORE CONCLUÍDO! 🏆🔥", `Incrível! Você resolveu o hardcore da semana e fez ${pontuacao} pontos.`, [
+      { texto: "📋 Compartilhar resultado", classe: "botao botao-share", acao: compartilharResultado },
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
     painelMensagem.textContent = "Hardcore concluído. Resultado salvo.";
@@ -1081,7 +1090,10 @@ function concluirFase() {
     atualizarPainel();
     const registro = { data: dataLocalISO(), pontuacao, regraA, regraB, concluido: true };
     try { localStorage.setItem(CHAVE_DIARIO, JSON.stringify(registro)); } catch (e) {}
+    atualizarStreakAoConcluirDiario();
+    renderizarStreak();
     mostrarMensagem("Desafio diário concluído! 🏆", `Você completou o desafio de hoje e fez ${pontuacao} pontos.`, [
+      { texto: "📋 Compartilhar resultado", classe: "botao botao-share", acao: compartilharResultado },
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
     salvarProgresso();
@@ -1212,6 +1224,7 @@ function mostrarDica() {
   };
 
   dicasUsadas++;
+  palavraDaDica = escolhida.termo;
   pontuacao = Math.max(0, pontuacao - 5);
   atualizarPainel();
 
@@ -1279,8 +1292,6 @@ function pararContadorSemanal() {
 
 /* ---------- EVENTOS DAS ZONAS ---------- */
 zonas.forEach(zona => {
-  const zonaAlvo = zona.dataset.zona;
-  const ehIntersecao = zonaAlvo === "AB";
   zona.addEventListener("dragover", evento => {
     evento.preventDefault();
     if (jogoEncerrado || faseConcluida) return;
@@ -1329,6 +1340,7 @@ function abrirDesafioDiario() {
       `Você já concluiu o desafio de hoje! 🏆<br><strong>Pontuação:</strong> ${registro.pontuacao} pontos.<div id="contador-diario" class="contador-diario"></div>`;
     iniciarContadorDiario();
     mostrarMensagem("Desafio diário concluído", `Sua pontuação de hoje: ${registro.pontuacao}.`, [
+      { texto: "📋 Compartilhar", classe: "botao botao-share", acao: compartilharResultado },
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
     return;
@@ -1365,6 +1377,7 @@ function abrirDesafioHardcore() {
       `Você já concluiu o hardcore desta semana! 🏆🔥<br><strong>Pontuação:</strong> ${registro.pontuacao} pontos.<div id="contador-semanal" class="contador-diario"></div>`;
     iniciarContadorSemanal();
     mostrarMensagem("Hardcore concluído", `Sua pontuação desta semana: ${registro.pontuacao}.`, [
+      { texto: "📋 Compartilhar", classe: "botao botao-share", acao: compartilharResultado },
       { texto: "Voltar ao modo clássico", classe: "botao botao-secundario", acao: voltarModoClassico }
     ]);
     return;
@@ -1473,6 +1486,8 @@ function restaurarPartida(estado) {
   recompensaUsada = Boolean(estado.recompensaUsada);
   dicasUsadas = Math.max(0, Number(estado.dicasUsadas) || 0);
   palavraCentralDescoberta = Boolean(estado.palavraCentralDescoberta);
+  errosPorTermo = estado.errosPorTermo || {};
+  palavraDaDica = estado.palavraDaDica || null;
 
   if (!modoHardcore) {
     const rotA = document.querySelector(".circulo-a .rotulo-regra");
@@ -1490,6 +1505,7 @@ function restaurarPartida(estado) {
   if (jogoEncerrado) {
     travarPalavras();
     mostrarMensagem("Fim de jogo! 💔", `Você fez ${pontuacao} pontos.`, [
+      { texto: "📋 Compartilhar", classe: "botao botao-share", acao: compartilharResultado },
       { texto: "Testar recompensa (+3 vidas)", classe: "botao", acao: simularAnuncioRecompensado, desabilitado: recompensaUsada },
       { texto: "Começar nova partida", classe: "botao botao-secundario", acao: novaPartida }
     ]);
@@ -1503,6 +1519,183 @@ function restaurarPartida(estado) {
   painelSalvamento.textContent = "Partida recuperada.";
   return true;
 }
+
+/* =========================================
+   STREAK DIÁRIO
+   ========================================= */
+function carregarStreak() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(CHAVE_STREAK) || "null");
+    if (!raw) return { ultimoDia: null, dias: 0, recorde: 0 };
+    return raw;
+  } catch (e) {
+    return { ultimoDia: null, dias: 0, recorde: 0 };
+  }
+}
+
+function salvarStreak(s) {
+  try { localStorage.setItem(CHAVE_STREAK, JSON.stringify(s)); } catch (e) {}
+}
+
+function atualizarStreakAoConcluirDiario() {
+  const hoje = dataLocalISO();
+  const s = carregarStreak();
+  if (s.ultimoDia === hoje) return s;
+  const ontem = new Date();
+  ontem.setDate(ontem.getDate() - 1);
+  const ontemStr = `${ontem.getFullYear()}-${String(ontem.getMonth()+1).padStart(2,"0")}-${String(ontem.getDate()).padStart(2,"0")}`;
+  if (s.ultimoDia === ontemStr) s.dias = (s.dias || 0) + 1;
+  else s.dias = 1;
+  s.ultimoDia = hoje;
+  s.recorde = Math.max(s.recorde || 0, s.dias);
+  salvarStreak(s);
+  return s;
+}
+
+function renderizarStreak() {
+  const el = document.getElementById("streak-badge");
+  if (!el) return;
+  const s = carregarStreak();
+  if (!s.dias || s.dias === 0) {
+    el.hidden = true;
+    return;
+  }
+  const hoje = dataLocalISO();
+  const jogouHoje = s.ultimoDia === hoje;
+  const hora = new Date().getHours();
+  const emRisco = !jogouHoje && hora >= 20;
+
+  el.hidden = false;
+  el.classList.toggle("em-risco", emRisco);
+
+  const recordeTxt = s.recorde > s.dias ? ` · recorde: ${s.recorde}` : "";
+  if (emRisco) {
+    el.textContent = `⚠️ Não perca seu streak de ${s.dias} dia${s.dias > 1 ? "s" : ""}! Jogue o diário hoje.`;
+  } else {
+    el.textContent = `🔥 ${s.dias} dia${s.dias > 1 ? "s" : ""} seguidos${recordeTxt}`;
+  }
+}
+
+/* =========================================
+   COMPARTILHAR RESULTADO
+   ========================================= */
+function montarTextoCompartilhavel() {
+  const hoje = dataLocalISO();
+  const [, mes, dia] = hoje.split("-");
+  const dataCurta = `${dia}/${mes}`;
+
+  let cabecalho;
+  if (modoHardcore) cabecalho = `NEXO 🔥 HARDCORE · ${dataCurta}`;
+  else if (modoDiario) cabecalho = `NEXO 📅 ${dataCurta}`;
+  else cabecalho = `NEXO · Nível ${nivel}`;
+
+  let grid = "";
+  palavrasDaFase.forEach(item => {
+    if (modoHardcore && puzzleHardcoreAtual && item.termo === puzzleHardcoreAtual.palavraCentral) return;
+    const colocado = document.querySelector(`.chip-palavra[data-termo="${item.termo}"]`);
+    if (!colocado) grid += "⬛";
+    else if (item.termo === palavraDaDica) grid += "🟧";
+    else if ((errosPorTermo[item.termo] || 0) > 0) grid += "🟨";
+    else grid += "🟦";
+  });
+
+  const linhas = [cabecalho, grid];
+
+  if (modoHardcore && palavraCentralDescoberta) linhas.push("⭐ Central: 🟦");
+
+  const totalErros = Object.values(errosPorTermo).reduce((a, b) => a + b, 0);
+  const extras = [];
+  if (totalErros > 0) extras.push(`${totalErros} erro${totalErros > 1 ? "s" : ""}`);
+  if (dicasUsadas > 0) extras.push(`${dicasUsadas} dica${dicasUsadas > 1 ? "s" : ""}`);
+  if (extras.length) linhas.push(`🎯 ${extras.join(" · ")}`);
+
+  linhas.push(`🏆 ${pontuacao} pts`);
+  linhas.push("");
+  linhas.push("nexogame.duckdns.org");
+
+  return linhas.join("\n");
+}
+
+async function compartilharResultado() {
+  const texto = montarTextoCompartilhavel();
+  if (navigator.share) {
+    try {
+      await navigator.share({ text: texto });
+      return;
+    } catch (e) {
+      if (e && e.name === "AbortError") return;
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(texto);
+    mostrarToast("✅ Resultado copiado! Cole no WhatsApp, Twitter ou onde quiser.", "ok");
+  } catch (e) {
+    mostrarToast("Não foi possível copiar automaticamente.", "err");
+  }
+}
+
+/* =========================================
+   TOAST
+   ========================================= */
+let toastTimeout = null;
+function mostrarToast(mensagem, tipo = "ok") {
+  const el = document.getElementById("toast");
+  if (!el) return;
+  el.textContent = mensagem;
+  el.classList.remove("ok", "err");
+  el.classList.add(tipo);
+  el.hidden = false;
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => { el.hidden = true; }, 3500);
+}
+
+/* =========================================
+   ONBOARDING
+   ========================================= */
+let onboardingSlide = 0;
+const TOTAL_SLIDES = 3;
+
+function abrirOnboardingSeNecessario() {
+  try {
+    if (localStorage.getItem(CHAVE_ONBOARDING)) return;
+  } catch (e) {}
+  document.getElementById("onboarding").hidden = false;
+  onboardingSlide = 0;
+  renderizarOnboarding();
+}
+
+function renderizarOnboarding() {
+  document.querySelectorAll(".onboarding-slide").forEach((el, i) => {
+    el.hidden = i !== onboardingSlide;
+  });
+  document.querySelectorAll(".onboarding-dots .dot").forEach((el, i) => {
+    el.classList.toggle("active", i === onboardingSlide);
+  });
+  document.getElementById("onboarding-prev").disabled = onboardingSlide === 0;
+  document.getElementById("onboarding-next").textContent =
+    onboardingSlide === TOTAL_SLIDES - 1 ? "Começar!" : "Próximo";
+}
+
+function fecharOnboarding() {
+  document.getElementById("onboarding").hidden = true;
+  try { localStorage.setItem(CHAVE_ONBOARDING, "1"); } catch (e) {}
+}
+
+document.getElementById("onboarding-next").addEventListener("click", () => {
+  if (onboardingSlide < TOTAL_SLIDES - 1) {
+    onboardingSlide++;
+    renderizarOnboarding();
+  } else {
+    fecharOnboarding();
+  }
+});
+document.getElementById("onboarding-prev").addEventListener("click", () => {
+  if (onboardingSlide > 0) {
+    onboardingSlide--;
+    renderizarOnboarding();
+  }
+});
+document.getElementById("onboarding-skip").addEventListener("click", fecharOnboarding);
 
 /* ---------- SERVICE WORKER ---------- */
 if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
@@ -1518,3 +1711,6 @@ const estadoSalvo = lerSalvamento();
 if (!estadoSalvo || !restaurarPartida(estadoSalvo)) {
   iniciarFase();
 }
+renderizarStreak();
+abrirOnboardingSeNecessario();
+setInterval(renderizarStreak, 60 * 1000);
