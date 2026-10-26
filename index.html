@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="style.css">
   <title>NEXO - Desafio Lógico</title>
 
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8555209678433654"
           crossorigin="anonymous"></script>
 </head>
@@ -29,6 +28,7 @@
     <nav class="modos-jogo" aria-label="Modos de jogo">
       <button id="botao-modo-normal" class="botao botao-secundario" type="button">Modo clássico</button>
       <button id="botao-modo-diario" class="botao" type="button">📅 Desafio diário</button>
+      <button id="botao-modo-hardcore" class="botao botao-hardcore" type="button">🔥 Hardcore diário</button>
     </nav>
     <section id="painel-diario" class="painel-diario" hidden aria-live="polite"></section>
     <section class="instrucoes">
@@ -40,13 +40,28 @@
       <p id="estado-salvamento" class="estado-salvamento">Seu progresso é salvo neste dispositivo.</p>
     </section>
 
-    <section class="tabuleiro" aria-label="Diagrama de Venn">
+    <section id="tabuleiro-2" class="tabuleiro" aria-label="Diagrama de Venn">
       <div class="circulo circulo-a zona-drop" data-zona="A" aria-label="Somente regra A"><span class="rotulo-regra">Regra A</span></div>
       <div class="circulo circulo-b zona-drop" data-zona="B" aria-label="Somente regra B"><span class="rotulo-regra">Regra B</span></div>
       <div class="circulo intersecao zona-drop" data-zona="AB" aria-label="Regras A e B"></div>
     </section>
 
-    <section class="zona-nenhuma zona-drop" data-zona="N" aria-label="Nenhuma das regras">
+    <section id="tabuleiro-3" class="tabuleiro-hardcore" aria-label="Diagrama Hardcore" hidden>
+      <div class="venn3">
+        <div class="venn-circulo venn-a"></div>
+        <div class="venn-circulo venn-b"></div>
+        <div class="venn-circulo venn-c"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="A" style="left:55px;top:90px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="B" style="left:285px;top:90px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="C" style="left:170px;top:290px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="AB" style="left:170px;top:90px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="AC" style="left:105px;top:190px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore" data-zona="BC" style="left:235px;top:190px;"></div>
+        <div class="venn-zona zona-drop zona-hardcore zona-central" data-zona="ABC" style="left:170px;top:160px;"></div>
+      </div>
+    </section>
+
+    <section id="zona-nenhuma" class="zona-nenhuma zona-drop" data-zona="N" aria-label="Nenhuma das regras">
       <span class="rotulo-nenhuma">Nenhuma das regras</span>
     </section>
 
@@ -73,7 +88,7 @@
       <a href="sobre.html">Sobre</a>
       <a href="privacidade.html">Privacidade</a>
       <a href="termos.html">Termos</a>
-      <a href="mailto:sismaster.gg@gmail.com">Contato</a>
+      <a href="mailto:sismaster.gg@gmail.con">Contato</a>
     </nav>
   </footer>
   <script src="script.js"></script>
