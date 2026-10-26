@@ -662,3 +662,64 @@ footer { color: #747d8c; font-size: 12px; padding: 12px; }
   width: 100%;
   padding: 12px;
 }
+
+/* --- Logo com Venn diagram --- */
+.logo-nexo {
+  font-size: 36px;
+  letter-spacing: 5px;
+  margin: 4px 0 5px;
+  display: block;
+  font-weight: bold;
+  color: var(--texto);
+  line-height: 1;
+}
+.logo-text {
+  letter-spacing: 5px;
+}
+.logo-o {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 26px;
+  vertical-align: -3px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.logo-o-a,
+.logo-o-b {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  top: 0;
+  mix-blend-mode: screen;
+}
+.logo-o-a {
+  left: 0;
+  background: rgba(255, 71, 87, 0.92);
+}
+.logo-o-b {
+  right: 0;
+  background: rgba(30, 144, 255, 0.92);
+}
+
+/* Acessibilidade: texto só para leitores de tela */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Ajuste responsivo para mobile */
+@media (max-width: 500px) {
+  .logo-nexo { font-size: 30px; letter-spacing: 4px; }
+  .logo-text { letter-spacing: 4px; }
+  .logo-o { width: 34px; height: 22px; vertical-align: -3px; margin-left: 4px; margin-right: 4px; }
+  .logo-o-a, .logo-o-b { width: 22px; height: 22px; }
+}
