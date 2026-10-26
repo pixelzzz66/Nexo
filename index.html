@@ -28,7 +28,7 @@
     <nav class="modos-jogo" aria-label="Modos de jogo">
       <button id="botao-modo-normal" class="botao botao-secundario" type="button">Modo clássico</button>
       <button id="botao-modo-diario" class="botao" type="button">📅 Desafio diário</button>
-      <button id="botao-modo-hardcore" class="botao botao-hardcore" type="button">🔥 Hardcore diário</button>
+      <button id="botao-modo-hardcore" class="botao botao-hardcore" type="button">🔥 Hardcore semanal</button>
     </nav>
     <section id="painel-diario" class="painel-diario" hidden aria-live="polite"></section>
     <section class="instrucoes">
@@ -38,6 +38,15 @@
       <p id="progresso">Palavras restantes: 0</p>
       <button id="botao-dica" class="botao botao-dica" type="button">💡 Dica (-5 pts)</button>
       <p id="estado-salvamento" class="estado-salvamento">Seu progresso é salvo neste dispositivo.</p>
+    </section>
+
+    <section id="secao-central" class="secao-central" hidden>
+      <label for="input-central">Qual palavra pertence ao centro (as três regras)?</label>
+      <div class="input-central-wrap">
+        <input type="text" id="input-central" autocomplete="off" spellcheck="false" maxlength="30" placeholder="Digite a palavra central...">
+        <button id="botao-central" class="botao" type="button">Conferir</button>
+      </div>
+      <p id="feedback-central" aria-live="polite"></p>
     </section>
 
     <section id="tabuleiro-2" class="tabuleiro" aria-label="Diagrama de Venn">
@@ -88,7 +97,7 @@
       <a href="sobre.html">Sobre</a>
       <a href="privacidade.html">Privacidade</a>
       <a href="termos.html">Termos</a>
-      <a href="mailto:sismaster.gg@gmail.con">Contato</a>
+      <a href="mailto:sismaster.gg@gmail.com">Contato</a>
     </nav>
   </footer>
   <script src="script.js"></script>
