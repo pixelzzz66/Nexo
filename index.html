@@ -24,6 +24,8 @@
     </div>
   </header>
 
+  <div id="streak-badge" class="streak-badge" hidden aria-live="polite"></div>
+
   <main>
     <nav class="modos-jogo" aria-label="Modos de jogo">
       <button id="botao-modo-normal" class="botao botao-secundario" type="button">Modo clássico</button>
@@ -97,9 +99,58 @@
       <a href="sobre.html">Sobre</a>
       <a href="privacidade.html">Privacidade</a>
       <a href="termos.html">Termos</a>
-      <a href="mailto:sismaster.gg@gmail.com">Contato</a>
+      <a href="mailto:contato@nexogame.duckdns.org">Contato</a>
     </nav>
   </footer>
+
+  <!-- Toast de feedback -->
+  <div id="toast" class="toast" hidden aria-live="polite"></div>
+
+  <!-- Onboarding -->
+  <div id="onboarding" class="onboarding-overlay" hidden>
+    <div class="onboarding-modal">
+      <button class="onboarding-skip" id="onboarding-skip" type="button">Pular</button>
+
+      <div class="onboarding-slide" data-slide="0">
+        <div class="onboarding-visual">🎯</div>
+        <h2>Bem-vindo ao NEXO</h2>
+        <p>Um desafio de raciocínio lógico com palavras e diagramas de Venn.</p>
+        <p class="onboarding-sub">Duas regras, quatro regiões. Classifique cada palavra no lugar certo.</p>
+      </div>
+
+      <div class="onboarding-slide" data-slide="1" hidden>
+        <h2>Como jogar</h2>
+        <p>Arraste (ou toque) cada palavra para a região correta:</p>
+        <ul class="onboarding-list">
+          <li><strong>Só A</strong> — cumpre apenas a regra A</li>
+          <li><strong>Só B</strong> — cumpre apenas a regra B</li>
+          <li><strong>Interseção</strong> — cumpre as duas</li>
+          <li><strong>Nenhuma</strong> — não cumpre nenhuma</li>
+        </ul>
+        <p class="onboarding-sub">Use 💡 Dicas quando travar. Cada dica custa 5 pontos.</p>
+      </div>
+
+      <div class="onboarding-slide" data-slide="2" hidden>
+        <h2>Três modos de jogo</h2>
+        <ul class="onboarding-list">
+          <li><strong>Clássico</strong> — infinito, dificuldade crescente</li>
+          <li><strong>📅 Diário</strong> — mesmo puzzle para todos, todo dia. Mantenha seu streak!</li>
+          <li><strong>🔥 Hardcore semanal</strong> — 3 regras, 8 regiões, adivinhe a palavra central</li>
+        </ul>
+      </div>
+
+      <div class="onboarding-nav">
+        <button class="botao botao-secundario" id="onboarding-prev" type="button" disabled>Voltar</button>
+        <div class="onboarding-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <button class="botao" id="onboarding-next" type="button">Próximo</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
