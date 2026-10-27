@@ -745,34 +745,84 @@ function apagarSalvamento() {
 /* ---------- GERAÇÃO DE FASES ---------- */
 function gerarFaseClassica() {
   const categorias = [...new Set(bancoDePalavras.flatMap(item => item.tags))];
-  const quantidadeDesejada = Math.min(4, 2 + Math.floor((nivel - 1) / 3));
+  const baseQtd = Math.min(4, 2 + Math.floor((nivel - 1) / 3));
+  const totalDesejado = baseQtd * 4;
+
   const paresPossiveis = [];
   for (let i = 0; i < categorias.length; i++) {
     for (let j = i + 1; j < categorias.length; j++) paresPossiveis.push([categorias[i], categorias[j]]);
   }
-  for (let qtd = quantidadeDesejada; qtd >= 1; qtd--) {
-    const paresValidos = [];
-    for (const [catA, catB] of paresPossiveis) {
-      const soA = bancoDePalavras.filter(i => i.tags.includes(catA) && !i.tags.includes(catB));
-      const soB = bancoDePalavras.filter(i => i.tags.includes(catB) && !i.tags.includes(catA));
-      const ambos = bancoDePalavras.filter(i => i.tags.includes(catA) && i.tags.includes(catB));
-      const nenhum = bancoDePalavras.filter(i => !i.tags.includes(catA) && !i.tags.includes(catB));
-      if (soA.length >= qtd && soB.length >= qtd && ambos.length >= qtd && nenhum.length >= qtd) {
-        paresValidos.push({ catA, catB, soA, soB, ambos, nenhum, qtd });
-      }
-    }
-    if (paresValidos.length) {
-      const e = paresValidos[Math.floor(Math.random() * paresValidos.length)];
-      const palavras = [
-        ...embaralhar(e.soA).slice(0, e.qtd),
-        ...embaralhar(e.soB).slice(0, e.qtd),
-        ...embaralhar(e.ambos).slice(0, e.qtd),
-        ...embaralhar(e.nenhum).slice(0, e.qtd)
-      ];
-      return { regraA: e.catA, regraB: e.catB, palavras: embaralhar(palavras) };
+
+  // Coleta todos os pares com pelo menos 1 palavra em CADA uma das 4 regiões
+  const paresComPalavras = [];
+  for (const [catA, catB] of paresPossiveis) {
+    const soA = bancoDePalavras.filter(i => i.tags.includes(catA) && !i.tags.includes(catB));
+    const soB = bancoDePalavras.filter(i => i.tags.includes(catB) && !i.tags.includes(catA));
+    const ambos = bancoDePalavras.filter(i => i.tags.includes(catA) && i.tags.includes(catB));
+    const nenhum = bancoDePalavras.filter(i => !i.tags.includes(catA) && !i.tags.includes(catB));
+    if (soA.length >= 1 && soB.length >= 1 && ambos.length >= 1 && nenhum.length >= 1) {
+      paresComPalavras.push({ catA, catB, soA, soB, ambos, nenhum });
     }
   }
+
+  if (!paresComPalavras.length) return null;
+
+  // Tenta o total desejado; se não houver par viável, cai em passos de 2 até 6
+  for (let total = totalDesejado; total >= 6; total -= 2) {
+    const maxPorRegiao = Math.ceil(total / 3);
+    const paresViaveis = [];
+
+    for (const p of paresComPalavras) {
+      const caps = [
+        Math.min(p.soA.length, maxPorRegiao),
+        Math.min(p.soB.length, maxPorRegiao),
+        Math.min(p.ambos.length, maxPorRegiao),
+        Math.min(p.nenhum.length, maxPorRegiao)
+      ];
+      const somaCaps = caps.reduce((a, b) => a + b, 0);
+      if (somaCaps >= total) paresViaveis.push({ ...p, caps });
+    }
+
+    if (paresViaveis.length) {
+      const e = paresViaveis[Math.floor(Math.random() * paresViaveis.length)];
+      const contagens = distribuirTotal(total, e.caps);
+      if (contagens) {
+        const palavras = [
+          ...embaralhar(e.soA).slice(0, contagens[0]),
+          ...embaralhar(e.soB).slice(0, contagens[1]),
+          ...embaralhar(e.ambos).slice(0, contagens[2]),
+          ...embaralhar(e.nenhum).slice(0, contagens[3])
+        ];
+        return { regraA: e.catA, regraB: e.catB, palavras: embaralhar(palavras) };
+      }
+    }
+  }
+
   return null;
+}
+
+// Distribui `total` palavras entre as 4 regiões (mín. 1 cada), respeitando caps
+function distribuirTotal(total, caps) {
+  const n = caps.length;
+  if (total < n) return null;
+  const somaCaps = caps.reduce((a, b) => a + b, 0);
+  if (total > somaCaps) return null;
+
+  const contagens = new Array(n).fill(1);
+  let restantes = total - n;
+
+  while (restantes > 0) {
+    const disponiveis = [];
+    for (let i = 0; i < n; i++) {
+      if (contagens[i] < caps[i]) disponiveis.push(i);
+    }
+    if (!disponiveis.length) return null;
+    const escolhido = disponiveis[Math.floor(Math.random() * disponiveis.length)];
+    contagens[escolhido]++;
+    restantes--;
+  }
+
+  return contagens;
 }
 
 function gerarFase() {
