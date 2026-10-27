@@ -937,6 +937,9 @@ function iniciarFase() {
     if (rotB) rotB.textContent = "";
     painelRegras.textContent = `A: ${regraA} | B: ${regraB} | C: ${regraC}`;
     secaoCentral.hidden = false;
+    document.getElementById("rotulo-hardcore-a").textContent = `A · ${regraA}`;
+    document.getElementById("rotulo-hardcore-b").textContent = `B · ${regraB}`;
+    document.getElementById("rotulo-hardcore-c").textContent = `C · ${regraC}`;
   } else {
     palavrasRestantes = palavrasDaFase.length;
     const rotA = document.querySelector(".circulo-a .rotulo-regra");
@@ -1499,6 +1502,14 @@ function restaurarPartida(estado) {
     painelRegras.textContent = `A: ${regraA} | B: ${regraB} | C: ${regraC}`;
   }
 
+  if (modoHardcore) {
+    document.getElementById("rotulo-hardcore-a").textContent = `A · ${regraA}`;
+    document.getElementById("rotulo-hardcore-b").textContent = `B · ${regraB}`;
+    document.getElementById("rotulo-hardcore-c").textContent = `C · ${regraC}`;
+  }
+
+  renderizarPalavras(estado.regioes || {});
+   
   renderizarPalavras(estado.regioes || {});
   atualizarPainel();
 
