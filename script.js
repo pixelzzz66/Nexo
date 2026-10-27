@@ -558,6 +558,133 @@ const desafiosHardcore = [
   }
 ];
 
+  {
+    regraA: "Animal", regraB: "Doméstico", regraC: "Faz barulho",
+    palavraCentral: "CACHORRO",
+    palavras: [
+      { termo: "CACHORRO", tags: ["Animal","Doméstico","Faz barulho"], regiao: "ABC" },
+      { termo: "RAPOSA", tags: ["Animal"], regiao: "A" },
+      { termo: "GIRAFA", tags: ["Animal"], regiao: "A" },
+      { termo: "MESA", tags: ["Doméstico"], regiao: "B" },
+      { termo: "SOFÁ", tags: ["Doméstico"], regiao: "B" },
+      { termo: "TROMBETE", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "ELEVADOR", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "COELHO", tags: ["Animal","Doméstico"], regiao: "AB" },
+      { termo: "HAMSTER", tags: ["Animal","Doméstico"], regiao: "AB" },
+      { termo: "LEÃO", tags: ["Animal","Faz barulho"], regiao: "AC" },
+      { termo: "TIGRE", tags: ["Animal","Faz barulho"], regiao: "AC" },
+      { termo: "GELADEIRA", tags: ["Doméstico","Faz barulho"], regiao: "BC" },
+      { termo: "ASPIRADOR", tags: ["Doméstico","Faz barulho"], regiao: "BC" },
+      { termo: "PEDRA", tags: [], regiao: "N" },
+      { termo: "ROCHA", tags: [], regiao: "N" }
+    ]
+  },
+  {
+    regraA: "Comida", regraB: "Amarelo", regraC: "Redondo",
+    palavraCentral: "OVO",
+    palavras: [
+      { termo: "OVO", tags: ["Comida","Amarelo","Redondo"], regiao: "ABC" },
+      { termo: "PÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "FEIJÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "GIRASSOL", tags: ["Amarelo"], regiao: "B" },
+      { termo: "CANÁRIO", tags: ["Amarelo"], regiao: "B" },
+      { termo: "RODA", tags: ["Redondo"], regiao: "C" },
+      { termo: "LUA", tags: ["Redondo"], regiao: "C" },
+      { termo: "BANANA", tags: ["Comida","Amarelo"], regiao: "AB" },
+      { termo: "MILHO", tags: ["Comida","Amarelo"], regiao: "AB" },
+      { termo: "PIZZA", tags: ["Comida","Redondo"], regiao: "AC" },
+      { termo: "TOMATE", tags: ["Comida","Redondo"], regiao: "AC" },
+      { termo: "SOL", tags: ["Amarelo","Redondo"], regiao: "BC" },
+      { termo: "BOLA AMARELA", tags: ["Amarelo","Redondo"], regiao: "BC" },
+      { termo: "CADEIRA", tags: [], regiao: "N" },
+      { termo: "PEDRA", tags: [], regiao: "N" }
+    ]
+  },
+  {
+    regraA: "Veículo", regraB: "Tem rodas", regraC: "Faz barulho",
+    palavraCentral: "MOTO",
+    palavras: [
+      { termo: "MOTO", tags: ["Veículo","Tem rodas","Faz barulho"], regiao: "ABC" },
+      { termo: "BARCO", tags: ["Veículo"], regiao: "A" },
+      { termo: "SUBMARINO", tags: ["Veículo"], regiao: "A" },
+      { termo: "MALA COM RODINHAS", tags: ["Tem rodas"], regiao: "B" },
+      { termo: "RODA", tags: ["Tem rodas"], regiao: "B" },
+      { termo: "TROMBETE", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "ELEVADOR", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "CARRO", tags: ["Veículo","Tem rodas"], regiao: "AB" },
+      { termo: "BICICLETA", tags: ["Veículo","Tem rodas"], regiao: "AB" },
+      { termo: "AVIÃO", tags: ["Veículo","Faz barulho"], regiao: "AC" },
+      { termo: "HELICÓPTERO", tags: ["Veículo","Faz barulho"], regiao: "AC" },
+      { termo: "CARRINHO DE SUPERMERCADO", tags: ["Tem rodas","Faz barulho"], regiao: "BC" },
+      { termo: "CADEIRA DE RODAS", tags: ["Tem rodas","Faz barulho"], regiao: "BC" },
+      { termo: "PEDRA", tags: [], regiao: "N" },
+      { termo: "NUVEM", tags: [], regiao: "N" }
+    ]
+  },
+  {
+    regraA: "Comida", regraB: "Líquido", regraC: "Branco",
+    palavraCentral: "LEITE",
+    palavras: [
+      { termo: "LEITE", tags: ["Comida","Líquido","Branco"], regiao: "ABC" },
+      { termo: "PÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "FEIJÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "TINTA", tags: ["Líquido"], regiao: "B" },
+      { termo: "ÁGUA", tags: ["Líquido"], regiao: "B" },
+      { termo: "NEVE", tags: ["Branco"], regiao: "C" },
+      { termo: "PAPEL", tags: ["Branco"], regiao: "C" },
+      { termo: "CAFÉ", tags: ["Comida","Líquido"], regiao: "AB" },
+      { termo: "SUCO", tags: ["Comida","Líquido"], regiao: "AB" },
+      { termo: "ARROZ", tags: ["Comida","Branco"], regiao: "AC" },
+      { termo: "AÇÚCAR", tags: ["Comida","Branco"], regiao: "AC" },
+      { termo: "TINTA BRANCA", tags: ["Líquido","Branco"], regiao: "BC" },
+      { termo: "ÁGUA DE COCO", tags: ["Líquido","Branco"], regiao: "BC" },
+      { termo: "CADEIRA", tags: [], regiao: "N" },
+      { termo: "PEDRA", tags: [], regiao: "N" }
+    ]
+  },
+  {
+    regraA: "Animal", regraB: "Voa", regraC: "Faz barulho",
+    palavraCentral: "CORVO",
+    palavras: [
+      { termo: "CORVO", tags: ["Animal","Voa","Faz barulho"], regiao: "ABC" },
+      { termo: "RAPOSA", tags: ["Animal"], regiao: "A" },
+      { termo: "GIRAFA", tags: ["Animal"], regiao: "A" },
+      { termo: "BALÃO", tags: ["Voa"], regiao: "B" },
+      { termo: "PIPA", tags: ["Voa"], regiao: "B" },
+      { termo: "TROMBETE", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "ELEVADOR", tags: ["Faz barulho"], regiao: "C" },
+      { termo: "BORBOLETA", tags: ["Animal","Voa"], regiao: "AB" },
+      { termo: "ÁGUIA", tags: ["Animal","Voa"], regiao: "AB" },
+      { termo: "LEÃO", tags: ["Animal","Faz barulho"], regiao: "AC" },
+      { termo: "GALINHA", tags: ["Animal","Faz barulho"], regiao: "AC" },
+      { termo: "AVIÃO", tags: ["Voa","Faz barulho"], regiao: "BC" },
+      { termo: "HELICÓPTERO", tags: ["Voa","Faz barulho"], regiao: "BC" },
+      { termo: "CADEIRA", tags: [], regiao: "N" },
+      { termo: "PEDRA", tags: [], regiao: "N" }
+    ]
+  },
+  {
+    regraA: "Comida", regraB: "Verde", regraC: "Redondo",
+    palavraCentral: "MELANCIA",
+    palavras: [
+      { termo: "MELANCIA", tags: ["Comida","Verde","Redondo"], regiao: "ABC" },
+      { termo: "PÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "FEIJÃO", tags: ["Comida"], regiao: "A" },
+      { termo: "GRAMA", tags: ["Verde"], regiao: "B" },
+      { termo: "FOLHA", tags: ["Verde"], regiao: "B" },
+      { termo: "BOLA", tags: ["Redondo"], regiao: "C" },
+      { termo: "RODA", tags: ["Redondo"], regiao: "C" },
+      { termo: "ALFACE", tags: ["Comida","Verde"], regiao: "AB" },
+      { termo: "BRÓCOLIS", tags: ["Comida","Verde"], regiao: "AB" },
+      { termo: "PIZZA", tags: ["Comida","Redondo"], regiao: "AC" },
+      { termo: "TOMATE", tags: ["Comida","Redondo"], regiao: "AC" },
+      { termo: "SEMÁFORO VERDE", tags: ["Verde","Redondo"], regiao: "BC" },
+      { termo: "BOLA VERDE", tags: ["Verde","Redondo"], regiao: "BC" },
+      { termo: "CADEIRA", tags: [], regiao: "N" },
+      { termo: "PEDRA", tags: [], regiao: "N" }
+    ]
+  }
+
 /* ---------- ESTADO ---------- */
 let vidas = VIDAS_INICIAIS;
 let nivel = 1;
