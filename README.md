@@ -52,17 +52,29 @@ NEXO é um projeto independente desenvolvido por um estudante de Engenharia de P
 
 ## Estrutura de arquivos
 nexo/
+
 ├── index.html # Página principal do jogo
+
 ├── script.js # Toda a lógica (catálogo, geração, UI, PWA)
+
 ├── style.css # Estilos
+
 ├── manifest.json # Configuração do PWA
+
 ├── sw.js # Service Worker (cache offline)
+
 ├── icon.svg # Ícone do app
+
 ├── ads.txt # Autorização de venda de anúncios
+
 ├── robots.txt # Diretivas para crawlers
+
 ├── sitemap.xml # Mapa do site
+
 ├── sobre.html # Sobre o projeto
+
 ├── privacidade.html # Política de Privacidade
+
 └── termos.html # Termos de Uso
 
 ---
