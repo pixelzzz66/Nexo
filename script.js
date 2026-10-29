@@ -373,7 +373,6 @@ const bancoDePalavras = [
   { termo: "ESFERA", tags: ["Forma", "Redondo"] }
 ];
 
-/* ---------- DESAFIOS HARDCORE ---------- */
 const desafiosHardcore = [
   {
     regraA: "Animal", regraB: "Voa", regraC: "Vive na água",
@@ -555,9 +554,7 @@ const desafiosHardcore = [
       { termo: "CADEIRA", tags: [], regiao: "N" },
       { termo: "PEDRA", tags: [], regiao: "N" }
     ]
-  }
-];
-
+  },
   {
     regraA: "Animal", regraB: "Doméstico", regraC: "Faz barulho",
     palavraCentral: "CACHORRO",
@@ -684,6 +681,7 @@ const desafiosHardcore = [
       { termo: "PEDRA", tags: [], regiao: "N" }
     ]
   }
+];
 
 /* ---------- ESTADO ---------- */
 let vidas = VIDAS_INICIAIS;
